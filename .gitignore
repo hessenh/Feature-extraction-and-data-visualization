@@ -1,0 +1,7 @@
+
+# Pandas checkpoint files
+.ipynb_checkpoints/
+
+
+# Python compiled files
+*.pyc
