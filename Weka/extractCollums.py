@@ -1,7 +1,7 @@
 import pandas as pd
 
 # This is used when we generalize labels. From spesific labels(walking, standing) to generalized(static vs dynamic)
-GENERALIZED = False
+GENERALIZED = True
 
 FEATURES_P03 = "/home/hessenh/Development/Prosjektoppgave/Notebook/data/FEATURES_P03.csv"
 df_features = pd.read_csv(FEATURES_P03)
