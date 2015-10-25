@@ -3,7 +3,12 @@ from feature_extraction import *
 from weka import *
 from label_generalization import *
 
+''' 
+Creating sliding window, extract features and creates the weka-files. 
 
+input: Subjects, window size, overlap and boolean values depening one what you want to do, e.g create windows
+
+'''
 def main(subjects, size_of_window, overlap_between_windows, create_sliding_windows, create_features, create_weka, create_weka_generalized):
 	for subject_directory in subjects:
 		print "Subject: " + subject_directory
@@ -16,6 +21,7 @@ def main(subjects, size_of_window, overlap_between_windows, create_sliding_windo
 		if create_features:
 			print "Extracting features"
 			features = ['mean', 'min', 'max', 'median','std', 'energy', 'zero-crossing', 'correlation', 'rms']
+			#features = ['mean', 'min', 'max', 'median','std']
 			extract_features_main(subject_directory,features)
 
 
@@ -30,9 +36,10 @@ def main(subjects, size_of_window, overlap_between_windows, create_sliding_windo
 			label_generalization_main(change_list, subject_directory)
 			weka_main(subject_directory,True)
 
+
 subjects = ["P03"]
 size_of_window = 50
 overlap_between_windows = 25
 
 
-main(subjects, size_of_window, overlap_between_windows, False, True, True, True)
+main(subjects, size_of_window, overlap_between_windows, False, True, False, False)
