@@ -21,9 +21,8 @@ def main(subjects, size_of_window, overlap_between_windows, create_sliding_windo
 		if create_features:
 			print "Extracting features"
 			features = ['mean', 'min', 'max', 'median','std', 'energy', 'zero-crossing', 'correlation', 'rms']
-			#features = ['mean', 'min', 'max', 'median','std']
+			#features = ['energy']
 			extract_features_main(subject_directory,features)
-
 
 		# Create weka file
 		if create_weka:
@@ -38,8 +37,8 @@ def main(subjects, size_of_window, overlap_between_windows, create_sliding_windo
 
 
 subjects = ["P03"]
-size_of_window = 50
-overlap_between_windows = 25
+size_of_window = 100
+overlap_between_windows = 50
 
 
-main(subjects, size_of_window, overlap_between_windows, False, True, False, False)
+main(subjects, size_of_window, overlap_between_windows, True, True, True, True)
