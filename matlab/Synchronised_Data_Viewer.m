@@ -225,12 +225,25 @@ linkaxes(ax,'x');
 %         end        
 % end
 
-%WRITE DS to CSV File
+%WRITE DS to CSV File and make directories for subject
 
-csvwrite(strcat(Files(1).name(1:length(Files(1).name)-4),'.csv'), DS{1})
-csvwrite(strcat(Files(2).name(1:length(Files(2).name)-4),'.csv'), DS{2})
-csvwrite(strcat(Files(3).name(1:length(Files(3).name)-4),'.csv') , DS{3})
 
+    nameArray = strsplit(Files(1).name,'_');
+    subjectName = char(nameArray(1));
+    path = strcat('../data/',subjectName,'/RAW_SIGNALS/');
+    mkdir(path);
+   
+ for i = 1:3   
+    filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
+    csvwrite(strcat(path,filename), DS{i});
+ end
+    
+    dirPath = strcat('../data/',subjectName,'/');
+    mkdir(dirPath,'DATA_WINDOW');
+    mkdir(dirPath,'WEKA');
+    mkdir(dirPath,'FEATURES');
+ 
+ 
 
 
 
