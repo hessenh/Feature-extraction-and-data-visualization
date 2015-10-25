@@ -71,24 +71,20 @@ def extract_energy_feature(df_x, df_y, df_z, start, length, feature_type, sensor
 
 
 
-'''_____________Sime features__________________'''
+'''_____________Simple features__________________'''
 
 def extract_simple_feature(data_frame, start, length, feature_type, sensor, axis):
-    result = []
- 
-    for i in range(start, start + length):
-        if feature_type == 'mean':
-            result.append(data_frame.iloc[i].mean())
-        elif feature_type == 'median':
-            result.append(data_frame.iloc[i].median())
-        elif feature_type == 'max':
-            result.append(data_frame.iloc[i].max())
-        elif feature_type == 'min':
-            result.append(data_frame.iloc[i].min())
-        elif feature_type == 'std':
-            result.append(data_frame.iloc[i].std())
 
-    data_frame_result = pd.DataFrame(np.array(result))
+    if feature_type == 'mean':
+        data_frame_result = data_frame.mean(axis=1)[start: start + length].to_frame()
+    elif feature_type == 'median':
+        data_frame_result = data_frame.median(axis=1)[start: start + length].to_frame()
+    elif feature_type == 'max':
+        data_frame_result = data_frame.max(axis=1)[start: start + length].to_frame()
+    elif feature_type == 'min':
+        data_frame_result = data_frame.min(axis=1)[start: start + length].to_frame()
+    elif feature_type == 'std':
+        data_frame_result = data_frame.std(axis=1)[start: start + length].to_frame()
+
     data_frame_result.columns = [feature_type + '_' + sensor +  '_' + axis ]
-
     return data_frame_result
