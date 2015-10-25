@@ -3,69 +3,33 @@ import pandas as pd
 
 
 '''____________________Root mean square_______________'''
+def rms(l):
+    return np.sqrt(l.dot(l)*1.0/len(l.values))
+
 def extract_rms_feature(data_frame, start, length, feature_type, sensor, axis):
-    result = []
-
-    for i in range(start, start+ length):
-        result.append(np.sqrt(data_frame.iloc[i].dot(data_frame.iloc[i])*1.0/len(data_frame.iloc[i].values)))
-
-    data_frame_result = pd.DataFrame(np.array(result))
-    data_frame_result.columns = [feature_type + '_' + sensor + '_' + axis]
-    return data_frame_result
-
-
-
+    data_frame = data_frame.apply(rms, axis=1)[start: start + length].to_frame()
+    data_frame.columns = [feature_type + '_' + sensor + '_' + axis]
+    return data_frame
 
 '''____________________Zero-crossing-rate_______________'''
+def zero_crossing(l):
+    return len(np.where(np.diff(np.sign(l.values)))[0])*1.0 / len(l.values)
+
 def extract_zero_crossing_rate_feature(data_frame, start, length, feature_type, sensor, axis):
-    result = []
-    
-    for i in range(start, start + length):
-        result.append(len(np.where(np.diff(np.sign(data_frame.iloc[i])))[0])*1.0 / len(data_frame.iloc[i].values))
-
-    data_frame_result = pd.DataFrame(np.array(result))
-    data_frame_result.columns = [feature_type + '_' + sensor + '_' + axis]
-    return data_frame_result
-
-
-
-
+    data_frame = data_frame.apply(zero_crossing, axis=1)[start: start + length].to_frame()
+    data_frame.columns = [feature_type + '_' + sensor + '_' + axis]
+    return data_frame
 
 '''____________________Correlation_______________'''
 def extract_correlation_feature(data_frame_one, data_frame_two, start, length, feature_type, sensor, axis):
-    result = []
-    
-    for i in range(start, start + length):
-        result.append(data_frame_one.iloc[i].corr(data_frame_two.iloc[i]))
+    data_frame = data_frame_one.corrwith(data_frame_two, axis=1)[start: start + length].to_frame()
+    data_frame.columns = [feature_type + '_' + sensor + '_' + axis]
+    return data_frame
 
-    data_frame_result = pd.DataFrame(np.array(result))
-    data_frame_result.columns = [feature_type + '_' + sensor + '_' + axis]
-    return data_frame_result
-
-
-
-
-
-'''____________________ENERGY_______________'''
-def sum_of_square(axis):
-    l = []
-    for i in axis:
-        l.append(float(i))
-    mean = sum(l)*1.0/len(l)
-    s = 0
-    for i in l:
-        s += (i-mean)**2
-    return s**0.5
-    
-def extract_energy_feature(df_x, df_y, df_z, start, length, feature_type, sensor):
-    result = []
-    for i in range(start, start + length):
-        energy = sum_of_square(df_x.iloc[i]) + sum_of_square(df_y.iloc[i]) + sum_of_square(df_z.iloc[i])
-        energy = energy*1.0 / 3
-        energy = energy / len(df_x.iloc[start].values)
-        result.append(energy)
-
-    data_frame_result = pd.DataFrame(np.array(result))
+'''____________________ENERGY_______________'''    
+def extract_energy_feature(df_x, df_y, df_z, start, length, feature_type, sensor):    
+    data_frame_result = ((np.sqrt(np.square(df_x.sub(np.mean(df_x,axis=1),axis=0)).sum(axis=1)) + np.sqrt(np.square(df_y.sub(np.mean(df_y,axis=1),axis=0)).sum(axis=1)) + np.sqrt(np.square(df_z.sub(np.mean(df_z,axis=1),axis=0)).sum(axis=1)))/3.0)/len(df_x.iloc[0].values)
+    data_frame_result = pd.DataFrame(np.array(data_frame_result))
     data_frame_result.columns = [feature_type + '_' + sensor]
     return data_frame_result
 
