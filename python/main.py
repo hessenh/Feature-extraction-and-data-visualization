@@ -31,7 +31,7 @@ def main(subjects, size_of_window, overlap_between_windows, create_sliding_windo
 
 		# Create generalized weka file
 		if create_weka_generalized:
-			change_list = [1,1,1,1,1,2,2,2,1,2,3,1,1,2]
+			change_list = [1,2,2,2,2,2,2,2,2,2,2,2,2,2]
 			label_generalization_main(change_list, subject_directory)
 			weka_main(subject_directory,True)
 
@@ -41,4 +41,4 @@ size_of_window = 100
 overlap_between_windows = 50
 
 
-main(subjects, size_of_window, overlap_between_windows, False, True, True, True)
+main(subjects, size_of_window, overlap_between_windows, False, False, False, True)
