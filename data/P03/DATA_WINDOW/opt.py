@@ -59,9 +59,11 @@ def fft_spectral_centroid(l):
     for x in range(0, 50):
         sum_frequency_times_amplitude += x * abs(fft[x])
         sum_amplitude += abs(fft[x])
+
+    print sum_frequency_times_amplitude/sum_amplitude
     return sum_frequency_times_amplitude/sum_amplitude
 
-df_x = df_x[0:1]
+df_x = df_x[0:10]
 print df_x
 data_frame_result = df_x.apply(fft_spectral_centroid,axis=1).to_frame()
 
