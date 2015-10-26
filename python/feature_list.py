@@ -53,7 +53,7 @@ def extract_simple_feature(data_frame, start, length, feature_type, sensor, axis
     data_frame_result.columns = [feature_type + '_' + sensor +  '_' + axis ]
     return data_frame_result
 
-'''____________FFT features__________________________'''
+'''____________FFT simple features__________________________'''
 
 def fft_mean(l):
     fft = np.fft.fft(l)
@@ -75,8 +75,13 @@ def fft_std(l):
     fft = np.fft.fft(l)
     return np.std(abs(fft))
 
+<<<<<<< Updated upstream
 def extract_fft_feature(data_frame, start, length, feature_type, sensor, axis):
     if feature_type == 'fft-mean':
+=======
+def extract_simple_fft_feature(data_frame, start, length, feature_type, sensor, axis):
+    if feature_type == 'fft_mean':
+>>>>>>> Stashed changes
         data_frame_result = data_frame.apply(fft_mean, axis=1)[start: start + length].to_frame()
     elif feature_type == 'fft-median':
         data_frame_result = data_frame.apply(fft_median, axis=1)[start: start + length].to_frame()
@@ -89,3 +94,19 @@ def extract_fft_feature(data_frame, start, length, feature_type, sensor, axis):
 
     data_frame_result.columns = [feature_type + '_' + sensor +  '_' + axis ]
     return data_frame_result
+
+
+
+'''_____________________FFT Spectral Centroid __________________'''
+
+def fft_spectral_centroid(l):
+    fft = np.fft.ftt(l)
+    sum_frequency_times_amplitude = 0
+    sum_amplitude = 0
+    for x in range(0, 50):
+        sum_frequency_times_amplitude += x * abs(ftt.iloc(x))
+
+def extract_fft_spectral_centroid(data_frame,start,length,feature_type,sensor,axis):
+    data_frame_result = data_frame.apply(fft_spectral_centroid,axis=1)[start:start + length].to_frame()
+
+    
