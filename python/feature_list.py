@@ -52,3 +52,40 @@ def extract_simple_feature(data_frame, start, length, feature_type, sensor, axis
 
     data_frame_result.columns = [feature_type + '_' + sensor +  '_' + axis ]
     return data_frame_result
+
+'''____________FFT features__________________________'''
+
+def fft_mean(l):
+    fft = np.fft.fft(l)
+    return np.mean(abs(fft))
+
+def fft_median(l):
+    fft = np.fft.fft(l)
+    return np.median(abs(fft))
+
+def fft_max(l):
+    fft = np.fft.fft(l)
+    return np.max(abs(fft))
+
+def fft_min(l):
+    fft = np.fft.fft(l)
+    return np.min(abs(fft))
+
+def fft_std(l):
+    fft = np.fft.fft(l)
+    return np.std(abs(fft))
+
+def extract_fft_feature(data_frame, start, length, feature_type, sensor, axis):
+    if feature_type == 'fft_mean':
+        data_frame_result = data_frame.apply(fft_mean, axis=1)[start: start + length].to_frame()
+    elif feature_type == 'fft_median':
+        data_frame_result = data_frame.apply(fft_median, axis=1)[start: start + length].to_frame()
+    elif feature_type == 'fft_max':
+        data_frame_result = data_frame.apply(fft_max, axis=1)[start: start + length].to_frame()
+    elif feature_type == 'fft_min':
+        data_frame_result = data_frame.apply(fft_min, axis=1)[start: start + length].to_frame()
+    elif feature_type == 'fft_std':
+        data_frame_result = data_frame.apply(fft_std, axis=1)[start: start + length].to_frame()
+
+    data_frame_result.columns = [feature_type + '_' + sensor +  '_' + axis ]
+    return data_frame_result
