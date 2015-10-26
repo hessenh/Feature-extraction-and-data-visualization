@@ -23,9 +23,10 @@ df_x = df_x[0:10]
 
 def fft_mean(l):
     fft = np.fft.fft(l)
+    print ftt
     return np.mean(abs(fft))
 
-print df_x.apply(fft_mean, axis=1)
+#print df_x.apply(fft_mean, axis=1)
 
 
 #print ((np.sqrt(np.square(df_x.sub(np.mean(df_x,axis=1),axis=0)).sum(axis=1)) + np.sqrt(np.square(df_y.sub(np.mean(df_y,axis=1),axis=0)).sum(axis=1)) + np.sqrt(np.square(df_z.sub(np.mean(df_z,axis=1),axis=0)).sum(axis=1)))/3.0)/len(df_x.iloc[0].values)
@@ -49,3 +50,18 @@ z = [-0.098116,-0.10938,-0.11563,-0.10317,-0.082145,-0.085325,-0.097163,-0.10639
 
 #print 'mean', np.mean(x)
 #print ((sum_of_square(x) + sum_of_square(y)+ sum_of_square(z))*1.0 / 3)/50
+
+def fft_spectral_centroid(l):
+    fft = np.fft.fft(l)
+    fft = fft[0:50]
+    sum_frequency_times_amplitude = 0
+    sum_amplitude = 0
+    for x in range(0, 50):
+        sum_frequency_times_amplitude += x * abs(fft[x])
+        sum_amplitude += abs(fft[x])
+    return sum_frequency_times_amplitude/sum_amplitude
+
+df_x = df_x[0:1]
+print df_x
+data_frame_result = df_x.apply(fft_spectral_centroid,axis=1).to_frame()
+
