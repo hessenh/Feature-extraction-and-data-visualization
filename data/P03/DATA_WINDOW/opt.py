@@ -18,8 +18,17 @@ def cor(l,o):
 	print o
 
 
+df_x = df_x[0:10]
 
-print ((np.sqrt(np.square(df_x.sub(np.mean(df_x,axis=1),axis=0)).sum(axis=1)) + np.sqrt(np.square(df_y.sub(np.mean(df_y,axis=1),axis=0)).sum(axis=1)) + np.sqrt(np.square(df_z.sub(np.mean(df_z,axis=1),axis=0)).sum(axis=1)))/3.0)/len(df_x.iloc[0].values)
+
+def fft_mean(l):
+    fft = np.fft.fft(l)
+    return np.mean(abs(fft))
+
+print df_x.apply(fft_mean, axis=1)
+
+
+#print ((np.sqrt(np.square(df_x.sub(np.mean(df_x,axis=1),axis=0)).sum(axis=1)) + np.sqrt(np.square(df_y.sub(np.mean(df_y,axis=1),axis=0)).sum(axis=1)) + np.sqrt(np.square(df_z.sub(np.mean(df_z,axis=1),axis=0)).sum(axis=1)))/3.0)/len(df_x.iloc[0].values)
 
 
 #print df_n.iloc[0]
@@ -39,4 +48,4 @@ y = [1.0074,1.0146,0.9953,1.0083,1.0028,1.0249,1.0535,1.0101,1.0108,1.0199,1.018
 z = [-0.098116,-0.10938,-0.11563,-0.10317,-0.082145,-0.085325,-0.097163,-0.10639,-0.092043,-0.05576,-0.057418,-0.071538,-0.070806,-0.079044,-0.13638,-0.1466,-0.037072,0.037204,0.044577,0.0080779,-0.15765,-0.20596,-0.18534,-0.063419,0.085938,0.2566,0.37688,0.48369,0.50276,0.14893,-0.32881,-0.48293,-0.41207,-0.43917,-0.21427,-0.0017234,0.085634,0.080325,0.18834,0.1933,-0.0036766,-0.20495,-0.26471,-0.17646,-0.013863,0.096974,0.15889,0.20312,0.19669,0.15564]
 
 #print 'mean', np.mean(x)
-print ((sum_of_square(x) + sum_of_square(y)+ sum_of_square(z))*1.0 / 3)/50
+#print ((sum_of_square(x) + sum_of_square(y)+ sum_of_square(z))*1.0 / 3)/50
