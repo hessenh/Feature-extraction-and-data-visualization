@@ -18,24 +18,6 @@ def extract_axis(df, size, overlap):
     return df_windows
     
     
-    
-'''
-Creates a dataframe with every Nth value. This is done to match the windows. 
-This may be a naive approach, because we could lose information.. 
-??? If less than 80% have the same lable, lable the window as transition ??? 
-Original: [1,2,3,4,5,6,7]
-New: [1,3,5,7]
-'''
-def extract_label(df, size, overlap):
-    df = df.values.tolist();
-    df = np.array(df)
-    step = size/2
-    df_windows = df[step::step]
-    df_windows = pd.DataFrame(df_windows)
-    return df_windows
-    
-    
-    
 def create_sliding_window(path, filename, seperator, size, overlap):
     
     axis = ["X", "Y", "Z"]
@@ -57,8 +39,9 @@ def create_sliding_window(path, filename, seperator, size, overlap):
             
         # Label
         else: 
-            df_windows = extract_label(df[i], size, overlap)
-
+            df_windows = extract_axis(df[i], size, overlap)
+            # label the window with the maximum number of labels in that window
+            df_windows = df_windows.max(axis=1)
             file_name_axis = filename[4:len(filename)-4] + "_L.csv"
         
     
