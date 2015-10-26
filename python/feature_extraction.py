@@ -36,6 +36,12 @@ def getFeature(df_x, df_y, df_z, feature_type, sensor, start, length):
         df_z_feature = extract_rms_feature(df_z, start, length, feature_type, sensor, 'z')
         return pd.concat([df_x_feature, df_y_feature, df_z_feature],axis=1)
 
+    elif feature_type in ['fft_mean', 'fft_median', 'fft_max', 'fft_min', 'fft_std' ]:
+        df_x_feature = extract_fft_feature(df_x, start, length, feature_type, sensor, 'x')
+        df_y_feature = extract_fft_feature(df_y, start, length, feature_type, sensor, 'y')
+        df_z_feature = extract_fft_feature(df_z, start, length, feature_type, sensor, 'z')
+        return pd.concat([df_x_feature, df_y_feature, df_z_feature],axis=1)
+
 def add_feature(features,df_x,df_y,df_z,feature_path,sensor,start,length):
     existing_features = []
 
