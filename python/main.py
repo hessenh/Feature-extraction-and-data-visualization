@@ -20,7 +20,7 @@ def main(subjects, size_of_window, overlap_between_windows, create_sliding_windo
 		# Extract features 
 		if create_features:
 			print "Extracting features"
-			features = ['mean', 'min', 'max', 'median','std', 'energy', 'zero-crossing', 'correlation', 'rms','fft-mean', 'fft-median', 'fft-max', 'fft-min', 'fft-std' ]
+			features = ['mean', 'min', 'max', 'median','std', 'energy', 'zero-crossing', 'correlation', 'rms','fft-mean', 'fft-median', 'fft-max', 'fft-min', 'fft-std','fft-spectral-centroid']
 			#features = ['energy']
 			extract_features_main(subject_directory,features)
 
@@ -41,4 +41,4 @@ size_of_window = 100
 overlap_between_windows = 50
 
 
-main(subjects, size_of_window, overlap_between_windows, True, True, True, True)
+main(subjects, size_of_window, overlap_between_windows, False, True, True, True)
