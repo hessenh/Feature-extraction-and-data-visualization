@@ -76,15 +76,15 @@ def fft_std(l):
     return np.std(abs(fft))
 
 def extract_fft_feature(data_frame, start, length, feature_type, sensor, axis):
-    if feature_type == 'fft_mean':
+    if feature_type == 'fft-mean':
         data_frame_result = data_frame.apply(fft_mean, axis=1)[start: start + length].to_frame()
-    elif feature_type == 'fft_median':
+    elif feature_type == 'fft-median':
         data_frame_result = data_frame.apply(fft_median, axis=1)[start: start + length].to_frame()
-    elif feature_type == 'fft_max':
+    elif feature_type == 'fft-max':
         data_frame_result = data_frame.apply(fft_max, axis=1)[start: start + length].to_frame()
-    elif feature_type == 'fft_min':
+    elif feature_type == 'fft-min':
         data_frame_result = data_frame.apply(fft_min, axis=1)[start: start + length].to_frame()
-    elif feature_type == 'fft_std':
+    elif feature_type == 'fft-std':
         data_frame_result = data_frame.apply(fft_std, axis=1)[start: start + length].to_frame()
 
     data_frame_result.columns = [feature_type + '_' + sensor +  '_' + axis ]
