@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
 
-df_x = pd.read_csv('Axivity_THIGH_Left_X.csv', header=None, sep='\,')
-df_y = pd.read_csv('Axivity_THIGH_Left_Y.csv', header=None, sep='\,')
-df_z = pd.read_csv('Axivity_THIGH_Left_Z.csv', header=None, sep='\,')
+df_x = pd.read_csv('Usability_LAB_All_L.csv', header=None, sep='\ ')
+#df_y = pd.read_csv('Axivity_THIGH_Left_Y.csv', header=None, sep='\,')
+#df_z = pd.read_csv('Axivity_THIGH_Left_Z.csv', header=None, sep='\,')
 
 
 def zero_crossing(l):
@@ -19,6 +19,9 @@ def cor(l,o):
 
 
 df_x = df_x[0:10]
+
+
+print df_x[df_x[0] != 13]
 
 
 def fft_mean(l):
@@ -63,7 +66,7 @@ def fft_spectral_centroid(l):
     print sum_frequency_times_amplitude/sum_amplitude
     return sum_frequency_times_amplitude/sum_amplitude
 
-df_x = df_x[0:10]
-print df_x
-data_frame_result = df_x.apply(fft_spectral_centroid,axis=1).to_frame()
+#df_x = df_x[0:10]
+#print df_x
+#data_frame_result = df_x.apply(fft_spectral_centroid,axis=1).to_frame()
 

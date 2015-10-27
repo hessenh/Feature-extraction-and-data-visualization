@@ -48,7 +48,7 @@ def weka_main(direct, generalized):
 	if generalized:
 		label_pos = ["@attribute act {1.0,2.0}"]
 	else: 
-		label_pos = ["@attribute act {1.0,6.0,7.0,8.0,9.0}"] #["@attribute act {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0}"]
+		label_pos = ["@attribute act {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0}"]#["@attribute act {1.0,6.0,7.0,8.0,9.0}"] #
 	# ["@attribute act {1.0,3.0,6.0,7.0,8.0,9.0,10.0,12.0}"]
 	finalList.append(label_pos)
 	finalList.append([''])
