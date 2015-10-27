@@ -2,6 +2,7 @@ from raw_signal_to_window import *
 from feature_extraction import *
 from weka import *
 from label_generalization import *
+from remove_activities import *
 
 ''' 
 Creating sliding window, extract features and creates the weka-files. 
@@ -9,9 +10,17 @@ Creating sliding window, extract features and creates the weka-files.
 input: Subjects, window size, overlap and boolean values depening one what you want to do, e.g create windows
 
 '''
-def main(subjects, size_of_window, overlap_between_windows, create_sliding_windows, create_features, create_weka, create_weka_generalized):
+def main(subjects, size_of_window, overlap_between_windows, remove_activities, create_sliding_windows, create_features, create_weka, create_weka_generalized):
 	for subject_directory in subjects:
 		print "Subject: " + subject_directory
+
+		# Remove activities such as undefined/static/dynamic
+		if remove_activities:
+			print "Removing activities"
+			activities = [11,13,14]
+			remove_activities_main(subject_directory, activities)
+
+
 		# Create sliding windows 
 		if create_sliding_windows:
 			print "Creating windows"
@@ -37,8 +46,8 @@ def main(subjects, size_of_window, overlap_between_windows, create_sliding_windo
 
 
 subjects = ["P03"]
-size_of_window = 100
-overlap_between_windows = 50
+size_of_window = 1000
+overlap_between_windows = 500
 
 
-main(subjects, size_of_window, overlap_between_windows, False, False, False, True)
+main(subjects, size_of_window, overlap_between_windows,True, True, True, True, True)
