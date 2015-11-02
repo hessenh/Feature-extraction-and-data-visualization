@@ -25,3 +25,4 @@ freqz(b,a);
 dataIn = randn(1000,1);
 dataOut = filter(b,a,vector);
 plot(dataOut, 'b-', 'linewidth', 3);
+
