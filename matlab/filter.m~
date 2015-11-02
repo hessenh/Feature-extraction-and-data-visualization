@@ -19,9 +19,9 @@ hold on;
 plot(smoothedVector(halfWidth:end-halfWidth), 'b-', 'linewidth', 3);
 
 
-figure;
+
 [b,a] = ellip(3,0.01,100,0.05);
-freqz(b,a);
+freqz(b,a)
 dataIn = randn(1000,1);
 dataOut = filter(b,a,vector);
-plot(dataOut, 'b-', 'linewidth', 3);
+plot(smoothedVector(halfWidth:end-halfWidth), 'b-', 'linewidth', 3);
