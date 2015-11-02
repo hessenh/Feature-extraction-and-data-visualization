@@ -228,22 +228,41 @@ linkaxes(ax,'x');
 %WRITE DS to CSV File and make directories for subject
 
 
+
     nameArray = strsplit(Files(1).name,'_');
     subjectName = char(nameArray(1));
     path = strcat('../data/',subjectName,'/RAW_SIGNALS/');
     mkdir(path);
    
- for i = 1:3   
-    filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
-    csvwrite(strcat(path,filename), DS{i});
- end
+  
+
     
+%  for i = 1:3   
+%     filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
+%     csvwrite(strcat(path,filename), DS{i});
+%  end
+    
+
+ 
     dirPath = strcat('../data/',subjectName,'/');
     mkdir(dirPath,'DATA_WINDOW');
     mkdir(dirPath,'WEKA');
     mkdir(dirPath,'FEATURES');
  
  
+[b,a] = ellip(3,0.01,100,0.05);
+freqz(b,a);
+
+
+for i =1:2
+    vector = DS{i};
+    for j=1:3
+        vector(j) = filter(b,a,vector(j));
+    end
+    filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_DC.csv');
+    csvwrite(strcat(path,filename), vector);
+end
+
 
 
 
