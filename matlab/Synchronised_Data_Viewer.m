@@ -29,7 +29,7 @@ switch reply
             Folders.name
             
             directoryname = uigetdir(Dir_Data_Exported, 'Pick a Directory');
-            directoryname
+        
             cd(directoryname);
             Files = dir('P*.mat');
             SensorsN = length(Files);
@@ -81,6 +81,8 @@ for j=1:length(S) % 7:7 %
         RSSa = mean(sqrt(sum(Accel(:,1:3).*Accel(:,1:3),2)));
         if(RSSa>2) % either the mean is ~9.81 or ~1
             Accel=Accel/RSSa; % or 9.81m/s
+            disp('Inni gravity greien');
+            S(j).SensorExtracted.SensorType
         else
             Accel=Accel;
         end
@@ -121,31 +123,30 @@ SyncStartSample = S(j).SensorExtracted.Handshakes.OffsetSamples;
  
  
  if( strcmp(S(j).SensorExtracted.SensorName , 'Usability' ) )
-     Activities = S(j).SensorExtracted.AllData.Frames.Activity( SyncStartSample : end , :  );
-     ActivitiesTimeAll = S(j).SensorExtracted.AllData.Frames.Time( SyncStartSample : end , :  );
-     ActivitiesTime = ActivitiesTimeAll - ActivitiesTimeAll(1);
-     
-     subplot(ax(j));
-     plot( ActivitiesTime , Activities  ,...
-          Time , DataSignalsOnly_CUT);
-%          TimeStampConstruct , DataSignalsOnly_CUT);
-
-     xlabel([S(j).SensorExtracted.SensorName ' ' S(j).SensorExtracted.SensorLocation]);
-     
-     YLabelTicks = S(j).SensorExtracted.AllData.YLabelTicks;
-     Ylabels = S(j).SensorExtracted.AllData.Labels;
-     
-     
-     set(gca,'YTick',YLabelTicks);
-     set(gca,'YTickLabel',Ylabels);
-     
+     Activities = S(j).SensorExtracted.AllData.FramesResampled.Activity( SyncStartSample : end , :  );
+%      ActivitiesTimeAll = S(j).SensorExtracted.AllData.FramesResampled.Time( SyncStartSample : end , :  );
+%      ActivitiesTime = ActivitiesTimeAll - ActivitiesTimeAll(1);
+%      subplot(ax(j));
+%      plot( ActivitiesTime , Activities  ,...
+%           Time , DataSignalsOnly_CUT);
+% %          TimeStampConstruct , DataSignalsOnly_CUT);
+% 
+%      xlabel([S(j).SensorExtracted.SensorName ' ' S(j).SensorExtracted.SensorLocation]);
+%      
+%      YLabelTicks = S(j).SensorExtracted.AllData.YLabelTicks;
+%      Ylabels = S(j).SensorExtracted.AllData.Labels;
+%      
+%      
+%      set(gca,'YTick',YLabelTicks);
+%      set(gca,'YTickLabel',Ylabels);
+%      
  else
      
-     TimeStampConstructFULL=FN_Cut_Signal_For_Sync(S(j).SensorExtracted.TimeConstructed,SyncStartSample);
-     TimeStampConstruct = TimeStampConstructFULL - TimeStampConstructFULL(1);
-     
-     subplot(ax(j)),plot( TimeStampConstruct , DataSignalsOnly_CUT );
-     xlabel([S(j).SensorExtracted.SensorName ' ' S(j).SensorExtracted.SensorLocation]);
+%      TimeStampConstructFULL=FN_Cut_Signal_For_Sync(S(j).SensorExtracted.TimeConstructed,SyncStartSample);
+%      TimeStampConstruct = TimeStampConstructFULL - TimeStampConstructFULL(1);
+%      
+%      subplot(ax(j)),plot( TimeStampConstruct , DataSignalsOnly_CUT );
+%      xlabel([S(j).SensorExtracted.SensorName ' ' S(j).SensorExtracted.SensorLocation]);
 
      DataSignalsOnly_CUT(1)
      % dateFormat = 13;
@@ -205,19 +206,19 @@ SyncStartSample = S(j).SensorExtracted.Handshakes.OffsetSamples;
     
    
 end
-length(Activities)
-ActivitiesResampled = [];
-
-for i=1:length(Activities)
-    ActivitiesResampled(length(ActivitiesResampled)+1) = Activities(i);
-    ActivitiesResampled(length(ActivitiesResampled)+1) = Activities(i);
-    ActivitiesResampled(length(ActivitiesResampled)+1) = Activities(i);
-    ActivitiesResampled(length(ActivitiesResampled)+1) = Activities(i);
-end
-
-DS{length(DS)+1} = transpose(ActivitiesResampled);
-linkaxes(ax,'x');
-
+% length(Activities)
+% ActivitiesResampled = [];
+% 
+% for i=1:length(Activities)
+%     ActivitiesResampled(length(ActivitiesResampled)+1) = Activities(i);
+%     ActivitiesResampled(length(ActivitiesResampled)+1) = Activities(i);
+%     ActivitiesResampled(length(ActivitiesResampled)+1) = Activities(i);
+%     ActivitiesResampled(length(ActivitiesResampled)+1) = Activities(i);
+% end
+% 
+% DS{length(DS)+1} = transpose(ActivitiesResampled);
+% linkaxes(ax,'x');
+DS{length(DS)+1} = Activities;
 %  otherwise
 %      
 %         if(exist('S')==0)
@@ -237,10 +238,10 @@ linkaxes(ax,'x');
   
 
     
-%  for i = 1:3   
-%     filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
-%     csvwrite(strcat(path,filename), DS{i});
-%  end
+  for i = 1:3   
+     filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
+     %csvwrite(strcat(path,filename), DS{i});
+  end
     
 
  
@@ -251,17 +252,17 @@ linkaxes(ax,'x');
  
  
 [b,a] = ellip(3,0.01,100,0.05);
-freqz(b,a);
+%freqz(b,a);
 
 
-for i =1:2
-    vector = DS{i};
-    for j=1:3
-        vector(j) = filter(b,a,vector(j));
-    end
-    filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_DC.csv');
-    csvwrite(strcat(path,filename), vector);
-end
+%for i =1:2
+%    vector = DS{i};
+%    for j=1:3
+%        vector(j) = filter(b,a,vector(j));
+%    end
+%    filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_DC.csv');
+%    csvwrite(strcat(path,filename), vector);
+%end
 
 
 
