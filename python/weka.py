@@ -24,11 +24,6 @@ def weka_main(direct, generalized):
 
 	df_features = pd.concat([df_features,df_labels],axis=1)
 
-	
-	# Remove activities with no importance
-	#remove_activities = [2.0,3.0, 4.0, 5.0,10.0, 11.0,12.0, 13.0, 14.0]
-	#for activity in remove_activities:
-	#	df_features = df_features[df_features['label'] != activity]
 
 	if generalized:
 		t = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/WEKA/' + direct + 'GENERALIZED.arff')
@@ -48,7 +43,7 @@ def weka_main(direct, generalized):
 	if generalized:
 		label_pos = ["@attribute act {1.0,2.0}"]
 	else: 
-		label_pos = ["@attribute act {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0}"]#["@attribute act {1.0,6.0,7.0,8.0,9.0}"] #
+		label_pos = ["@attribute act {1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0}"]#["@attribute act {1.0,6.0,7.0,8.0,9.0}"] #
 	# ["@attribute act {1.0,3.0,6.0,7.0,8.0,9.0,10.0,12.0}"]
 	finalList.append(label_pos)
 	finalList.append([''])

@@ -17,7 +17,7 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 		# Remove activities such as undefined/static/dynamic
 		if remove_activities:
 			print "Removing activities"
-			activities = [11,13,14]
+			activities = [-1,11,13,14,15] 
 			remove_activities_main(subject_directory, activities)
 
 
@@ -45,9 +45,31 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 			weka_main(subject_directory,True)
 
 
-subjects = ["P03"]
-size_of_window = 1000
-overlap_between_windows = 500
+subjects = ["P08","P09","P10","P11","P12","P13","P14","P15","P16","P17","P18","P19","P20","P21"]
+size_of_window = 100
+overlap_between_windows = 50
 
 
 main(subjects, size_of_window, overlap_between_windows,True, True, True, True, True)
+
+''' Activities: 
+:'none'	
+1:'walking'	
+2:'walking with transition'	
+3:'shuffling'	
+4:'stairs (ascending)'	
+5:'stairs (descending)'	
+6:'standing'	
+7:'sitting'	
+8:'lying'	
+9:'transition'	
+10:'leaning'	
+11:'undefined'	
+12:'jumping'	
+13:'Dynamic'	
+14:'Static'	
+15:'Shake'	
+16:'picking'	
+17:'kneeling'
+
+'''
