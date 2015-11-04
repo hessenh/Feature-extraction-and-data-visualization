@@ -6,7 +6,7 @@ from os.path import isfile, join
 from feature_list import *
 
 
-def getFeature(df_x, df_y, df_z, feature_type, sensor, start, length):
+def getFeature(df_x, df_y, df_z, df_x_DC, df_y_DC, df_z_DC, feature_type, sensor, start, length):
 
     # Simple pandas methods
     if feature_type in ['mean', 'min', 'max', 'median','std']:
@@ -56,9 +56,9 @@ def getFeature(df_x, df_y, df_z, feature_type, sensor, start, length):
         return pd.concat([df_x_feature, df_y_feature, df_z_feature],axis=1)
 
     elif feature_type == 'DC-angle':
-        return extract_DC_angle(df_x, df_y, df_z, start, length, feature_type, sensor)
+        return extract_DC_angle(df_x_DC, df_y_DC, df_z_DC, start, length, feature_type, sensor)
 
-def add_feature(features,df_x,df_y,df_z,feature_path,sensor,start,length):
+def add_feature(features,df_x,df_y,df_z,df_x_DC,df_y_DC,df_z_DC,feature_path,sensor,start,length):
     existing_features = []
 
     # if file exists
@@ -83,7 +83,7 @@ def add_feature(features,df_x,df_y,df_z,feature_path,sensor,start,length):
         check_feature_type = feature_type + "_" + sensor
 
         if check_feature_type not in existing_features:
-            df_new_features = getFeature(df_x, df_y, df_z, feature_type, sensor, start, length)
+            df_new_features = getFeature(df_x, df_y, df_z, df_x_DC,df_y_DC,df_z_DC, feature_type, sensor, start, length)
             print "Feature does NOT exist: " + feature_type
             # Add feature type to check list
             existing_features.append(check_feature_type)
@@ -118,8 +118,8 @@ def extract_features_main(direct,features,window_size) :
     df_chest_x,df_chest_y,df_chest_z = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Axivity_CHEST_Back_')
     df_thigh_x,df_thigh_y,df_thigh_z = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Axivity_THIGH_Left_')
 
-    df_chest_x_DC,df_chest_y_DC,df_chest_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_CHEST_Back_')
-    df_thigh_x_DC,df_thigh_y_DC,df_thigh_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_THIGH_Left_')
+    df_chest_x_DC,df_chest_y_DC,df_chest_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_CHEST_Back_DC_')
+    df_thigh_x_DC,df_thigh_y_DC,df_thigh_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_THIGH_Left_DC_')
 
     # name of path to FEATURES
     feature_path = path.relpath(p + '/FEATURES/FEATURES.csv')
@@ -129,6 +129,6 @@ def extract_features_main(direct,features,window_size) :
     length = min(len(df_chest_x), len(df_thigh_x))-1 
 
     # Add features
-    add_feature(features, df_thigh_x, df_thigh_y, df_thigh_z, feature_path, 'thigh', start, length)
-    add_feature(features, df_chest_x, df_chest_y, df_chest_z, feature_path, 'chest', start ,length) 
+    add_feature(features, df_thigh_x, df_thigh_y, df_thigh_z, df_thigh_x_DC, df_thigh_y_DC, df_thigh_x_DC, feature_path, 'thigh', start, length)
+    add_feature(features, df_chest_x, df_chest_y, df_chest_z, df_chest_x_DC, df_chest_y_DC, df_chest_x_DC, feature_path, 'chest', start ,length) 
 
