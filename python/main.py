@@ -10,7 +10,7 @@ Creating sliding window, extract features and creates the weka-files.
 input: Subjects, window size, overlap and boolean values depening one what you want to do, e.g create windows
 
 '''
-def main(subjects, size_of_window, overlap_between_windows, remove_activities, create_sliding_windows, create_features, create_weka, create_weka_generalized):
+def main(subjects, size_of_window, overlap_between_windows, dc_component, remove_activities, create_sliding_windows, create_features, current_window_size, create_weka, create_weka_generalized):
 	for subject_directory in subjects:
 		print "Subject: " + subject_directory
 
@@ -18,20 +18,20 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 		if remove_activities:
 			print "Removing activities"
 			activities = [-1,11,13,14,15] 
-			remove_activities_main(subject_directory, activities)
+			remove_activities_main(subject_directory, activities, dc_component)
 
 
 		# Create sliding windows 
 		if create_sliding_windows:
 			print "Creating windows"
-			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows)
+			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, dc_component)
 
 		# Extract features 
 		if create_features:
 			print "Extracting features"
 			features = ['mean', 'min', 'max', 'median','std', 'energy', 'zero-crossing', 'correlation', 'rms','fft-mean', 'fft-median', 'fft-max', 'fft-min', 'fft-std','fft-spectral-centroid']
 			#features = ['energy']
-			extract_features_main(subject_directory,features)
+			extract_features_main(subject_directory,features, current_window_size)
 
 		# Create weka file
 		if create_weka:
@@ -45,12 +45,22 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 			weka_main(subject_directory,True)
 
 
-subjects = ["P08","P09","P10","P11","P12","P13","P14","P15","P16","P17","P18","P19","P20","P21"]
+subjects = ["P01"]#["P01","P05","P07","P08","P09","P10","P11","P13","P12","P14","P15","P16","P17","P18","P19","P20","P21"]
 size_of_window = 100
 overlap_between_windows = 50
 
+# subjects, size_of_window, overlap_between_windows, remove_activities, dc_comp, create_sliding_windows, create_features, create_weka, create_weka_generalized, 
+main(subjects, 
+	size_of_window, 
+	overlap_between_windows,
+	False, # DC-signals we are working on?
+	False, # Remove activities from raw-signals
+	True, # Create sliding windows
+	False, # Create features? Remember to delete prev file if you are not appending a feature. 
+	5, # What window-size are the feature generated from?
+	False, # Create Weka?
+	False) # Create generalized weka?
 
-main(subjects, size_of_window, overlap_between_windows,True, True, True, True, True)
 
 ''' Activities: 
 :'none'	
