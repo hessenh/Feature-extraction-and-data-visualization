@@ -257,20 +257,19 @@ DS{length(DS)+1} = Activities;
 
 
 for i =1:3
-   % Sensor signals
-   if(i<3) 
-        vector = DS{i};
-        for j=1:3
-            vector(j) = filter(b,a,vector(j));
+   if(i<2) % either the mean is ~9.81 or ~1
+            Accel=Accel/RSSa; % or 9.81m/s
+            disp('Inni gravity greien');
+            S(j).SensorExtracted.SensorType
+        else
+            Accel=Accel;
         end
-        filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_DC.csv');
-        csvwrite(strcat(path,filename), vector);
-   % Lables
-   else 
-        filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv');
-        csvwrite(strcat(path,filename), DS{i});
+   vector = DS{i};
+   for j=1:3
+       vector(j) = filter(b,a,vector(j));
    end
-   
+   filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_DC.csv');
+   csvwrite(strcat(path,filename), vector);
 end
 
 
