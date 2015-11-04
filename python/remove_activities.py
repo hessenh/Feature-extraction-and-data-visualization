@@ -10,7 +10,6 @@ from os.path import isfile, join
 
 def remove_activities_main(subject_directory, activities, dc_comp):
 
-	label_folder = "/RAW_SIGNALS/"
 	if dc_comp:
 		folder = "/RAW_SIGNALS_DC/"
 	else:
