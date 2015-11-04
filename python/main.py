@@ -47,7 +47,7 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 			weka_main(subject_directory,True,current_window_size)
 
 
-subjects = ["P01"]#["P01","P05","P07","P08","P09","P10","P11","P13","P12","P14","P15","P16","P17","P18","P19","P20","P21"]
+subjects = ["P05"]#["P01","P05","P07","P08","P09","P10","P11","P13","P12","P14","P15","P16","P17","P18","P19","P20","P21"]
 size_of_window = 100
 overlap_between_windows = size_of_window/2
 

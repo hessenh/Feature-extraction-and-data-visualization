@@ -261,7 +261,7 @@ for i =1:3
    if(i<3) 
         vector = DS{i};
         for j=1:3
-            vector(j) = filter(b,a,vector(j));
+            vector(:,j) = filter(b,a,vector(:,j));
         end
         filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_DC.csv');
         csvwrite(strcat(path,filename), vector);
