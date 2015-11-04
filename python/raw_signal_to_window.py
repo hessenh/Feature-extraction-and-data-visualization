@@ -18,13 +18,13 @@ def extract_axis(df, size, overlap):
     return df_windows
     
     
-def create_sliding_window(path, filename, seperator, size, overlap):
+def create_sliding_window(path, filename, seperator, size, overlap, signal_folder, dc_component):
     
     axis = ["X", "Y", "Z"]
     
     pd.set_option('html',False)
 
-    f = path + "/RAW_SIGNALS/" + filename
+    f = path + signal_folder + filename
     
     df = pd.read_csv(f, header=None, sep=seperator)
 
@@ -44,19 +44,34 @@ def create_sliding_window(path, filename, seperator, size, overlap):
             df_windows = df_windows.max(axis=1)
             file_name_axis = filename[4:len(filename)-4] + "_L.csv"
         
-    
-        df_windows.to_csv(path + '/DATA_WINDOW/'+file_name_axis,  header=None, index=False)
+        
+        if dc_component:
+            folder_name = "DC"
+        else: 
+            folder_name = "ORIGINAL"
+
+        # Check if folder exist, create
+        new_folder = path + '/DATA_WINDOW/' + str(size / 100) + '/' + folder_name
+
+        if not os.path.exists(new_folder):
+            os.makedirs(new_folder)
+
+        df_windows.to_csv(new_folder + '/'+file_name_axis,  header=None, index=False)
 
 
 
-def raw_signal_to_window_main(direct, size, overlap):
+def raw_signal_to_window_main(direct, size, overlap, dc_component):
+    if dc_component:
+        signal_folder = "/RAW_SIGNALS_DC/"
+    else:
+        signal_folder = "/RAW_SIGNALS/"
     # Get parent dir
     dirname=os.path.dirname
     p = os.path.join(dirname(dirname(__file__)), 'data/'+direct)
 
     # Files in current directory
-    files_in_dir = [ f for f in listdir(p + "/RAW_SIGNALS/") if isfile(join(p+ "/RAW_SIGNALS/",f)) ]
+    files_in_dir = [ f for f in listdir(p + signal_folder) if isfile(join(p+ signal_folder,f)) ]
     print p
 
     for f in files_in_dir:
-        create_sliding_window(p, f, '\,', size, overlap)
+        create_sliding_window(p, f, '\,', size, overlap, signal_folder, dc_component)
