@@ -6,9 +6,9 @@ from os import listdir
 
 
 # Changing labels from spesific label to generalized label, eg. walking => Dynamic
-def label_generalization_main(convertion_list, direct):
+def label_generalization_main(convertion_list, direct,winow_size):
 	dirname = os.path.dirname
-	p = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/DATA_WINDOW/')
+	p = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/DATA_WINDOW/' + str(winow_size) + '/ORIGINAL')
 	
 	from_filename = '/Usability_LAB_All_L.csv'
 	to_filename = '/Usability_LAB_All_L_GENERALIZED.csv'
