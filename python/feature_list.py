@@ -116,3 +116,47 @@ def extract_fft_spectral_centroid(data_frame,start,length,feature_type,sensor,ax
     data_frame_result.columns = [feature_type + '_' + sensor + '_' + axis]
     return data_frame_result
 
+'''_____________________FFT Spectral Entropy __________________'''
+
+def fft_spectral_entropy(l):
+    fft = np.fft.fft(l)
+    fft = fft[0:50]
+    psum=0
+    H=0
+
+    for i in range(0,50):
+        a = (1.0/50)*abs(fft[i])*abs(fft[i])
+        psum = psum + a
+
+    for i in range(0, 50):
+        a = (1.0/50)*abs(fft[i])*abs(fft[i])
+        Pi = a/psum
+        H = H + Pi*np.log2(Pi) 
+    H=-H
+    
+    return H
+
+def extract_fft_spectral_entropy(data_frame,start,length,feature_type,sensor,axis):
+    data_frame_result = data_frame.apply(fft_spectral_entropy,axis=1)[start:start + length].to_frame()
+    
+    data_frame_result.columns = [feature_type + '_' + sensor + '_' + axis]
+    return data_frame_result    
+
+    '''_____________________Extract DC Angle __________________'''
+
+
+def extract_DC_angle(df_x, df_y, df_z, start, length, feature_type, sensor):
+    #
+    df_x_mean = df_x.mean(axis=1)
+    df_y_mean = df_y.mean(axis=1)
+    df_z_mean = df_z.mean(axis=1)
+
+    df_g = df_x_mean.pow(2,axis=0) + df_y_mean.pow(2,axis=0) + df_z_mean.pow(2,axis=0)
+    df_g = df_g.apply(np.sqrt)
+
+    df_div = df_z_mean.div(df_g,axis=0)
+    df_angle = df_div.apply(np.arccos) * 180 / math.pi
+
+    data_frame_result = df_angle
+    data_frame_result.columns = [feature_type + '_' + sensor]
+    return data_frame_result  

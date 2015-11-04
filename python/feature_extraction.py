@@ -49,6 +49,15 @@ def getFeature(df_x, df_y, df_z, feature_type, sensor, start, length):
         df_z_feature = extract_fft_spectral_centroid(df_z, start, length, feature_type, sensor, 'z')
         return pd.concat([df_x_feature, df_y_feature, df_z_feature],axis=1)
 
+    elif feature_type == 'fft-spectral-entropy':
+        df_x_feature = extract_fft_spectral_entropy(df_x, start, length, feature_type, sensor, 'x')
+        df_y_feature = extract_fft_spectral_entropy(df_y, start, length, feature_type, sensor, 'y')
+        df_z_feature = extract_fft_spectral_entropy(df_z, start, length, feature_type, sensor, 'z')
+        return pd.concat([df_x_feature, df_y_feature, df_z_feature],axis=1)
+
+    elif feature_type == 'DC-angle':
+        return extract_DC_angle(df_x, df_y, df_z, start, length, feature_type, sensor)
+
 def add_feature(features,df_x,df_y,df_z,feature_path,sensor,start,length):
     existing_features = []
 
@@ -99,15 +108,18 @@ def load_sensor_data(path, sensor):
 
 
 
-def extract_features_main(direct,features) :
+def extract_features_main(direct,features,window_size) :
 
     # name of parent directory
     dirname=os.path.dirname
     p = os.path.join(dirname(dirname(__file__)), 'data/'+direct)
 
     # Load data windows
-    df_chest_x,df_chest_y,df_chest_z = load_sensor_data(p,'/DATA_WINDOW/Axivity_CHEST_Back_')
-    df_thigh_x,df_thigh_y,df_thigh_z = load_sensor_data(p,'/DATA_WINDOW/Axivity_THIGH_Left_')
+    df_chest_x,df_chest_y,df_chest_z = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Axivity_CHEST_Back_')
+    df_thigh_x,df_thigh_y,df_thigh_z = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Axivity_THIGH_Left_')
+
+    df_chest_x_DC,df_chest_y_DC,df_chest_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_CHEST_Back_')
+    df_thigh_x_DC,df_thigh_y_DC,df_thigh_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_THIGH_Left_')
 
     # name of path to FEATURES
     feature_path = path.relpath(p + '/FEATURES/FEATURES.csv')
