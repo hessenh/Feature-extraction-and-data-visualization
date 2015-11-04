@@ -3,18 +3,27 @@ from os import path
 import os
 from os import listdir
 
-def weka_main(direct, generalized):
+def weka_main(direct, generalized,window_size):
+
+
+
 
 	# Get parent dir
 	dirname = os.path.dirname
-	FEATURES = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/FEATURES/FEATURES.csv')
+	FEATURES = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/FEATURES/'+str(window_size)+'/FEATURES.csv')
+
+	#Create feature folder for window size if it doesnt exist
+	new_folder =  os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/WEKA/'+str(window_size))
+	if not os.path.exists(new_folder):
+		os.makedirs(new_folder)
+
 
 	df_features = pd.read_csv(FEATURES)
 
 	if generalized:
-		LABELS = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/DATA_WINDOW/Usability_LAB_All_L_GENERALIZED.csv')
+		LABELS = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Usability_LAB_All_L_GENERALIZED.csv')
 	else:
-		LABELS = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/DATA_WINDOW/Usability_LAB_All_L.csv')
+		LABELS = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Usability_LAB_All_L.csv')
 
 	df_labels = pd.read_csv(LABELS)
 	df_labels.columns = ['label']
@@ -26,9 +35,9 @@ def weka_main(direct, generalized):
 
 
 	if generalized:
-		t = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/WEKA/' + direct + 'GENERALIZED.arff')
+		t = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/WEKA/' + str(window_size) +'/'+ direct + 'GENERALIZED.arff')
 	else:
-		t = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/WEKA/' + direct + '.arff')
+		t = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/WEKA/' + str(window_size) +'/' + direct + '.arff')
 
 
 	finalList = []

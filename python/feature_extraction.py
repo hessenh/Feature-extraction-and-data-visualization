@@ -122,11 +122,17 @@ def extract_features_main(direct,features,window_size) :
     df_thigh_x_DC,df_thigh_y_DC,df_thigh_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_THIGH_Left_DC_')
 
     # name of path to FEATURES
-    feature_path = path.relpath(p + '/FEATURES/FEATURES.csv')
+    feature_path = path.relpath(p + '/FEATURES/'+str(window_size)+'/FEATURES.csv')
 
     # Size of smallest sensor data
     start = 0
     length = min(len(df_chest_x), len(df_thigh_x))-1 
+
+    #Create feature folder for window size if it doesnt exist
+    new_folder = p + '/FEATURES/' + str(window_size) 
+    if not os.path.exists(new_folder):
+        os.makedirs(new_folder)
+
 
     # Add features
     add_feature(features, df_thigh_x, df_thigh_y, df_thigh_z, df_thigh_x_DC, df_thigh_y_DC, df_thigh_x_DC, feature_path, 'thigh', start, length)
