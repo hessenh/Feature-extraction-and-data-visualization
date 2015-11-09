@@ -24,10 +24,10 @@ def getFeature(df_x, df_y, df_z, df_x_DC, df_y_DC, df_z_DC, feature_type, sensor
         df_yz_feature = extract_correlation_feature(df_y, df_z, start, length, feature_type, sensor, 'yz')
         return pd.concat([df_xy_feature, df_xz_feature, df_yz_feature],axis=1)
         
-    elif feature_type == 'zero-crossing':
-        df_x_feature = extract_zero_crossing_rate_feature(df_x, start, length, feature_type, sensor, 'x')
-        df_y_feature = extract_zero_crossing_rate_feature(df_y, start, length, feature_type, sensor, 'y')
-        df_z_feature = extract_zero_crossing_rate_feature(df_z, start, length, feature_type, sensor, 'z')
+    elif feature_type == 'mean-crossing':
+        df_x_feature = extract_mean_crossing_rate_feature(df_x, start, length, feature_type, sensor, 'x')
+        df_y_feature = extract_mean_crossing_rate_feature(df_y, start, length, feature_type, sensor, 'y')
+        df_z_feature = extract_mean_crossing_rate_feature(df_z, start, length, feature_type, sensor, 'z')
         return pd.concat([df_x_feature, df_y_feature, df_z_feature],axis=1)
 
     elif feature_type == 'rms':
@@ -57,7 +57,13 @@ def getFeature(df_x, df_y, df_z, df_x_DC, df_y_DC, df_z_DC, feature_type, sensor
 
     elif feature_type == 'DC-angle':
         return extract_DC_angle(df_x_DC, df_y_DC, df_z_DC, start, length, feature_type, sensor)
-
+    
+    elif feature_type == 'fft-max-magnitude':
+        df_x_feature = extract_fft_max_magnitude(df_x, start, length, feature_type, sensor, 'x')
+        df_y_feature = extract_fft_max_magnitude(df_y, start, length, feature_type, sensor, 'y')
+        df_z_feature = extract_fft_max_magnitude(df_z, start, length, feature_type, sensor, 'z')
+        return pd.concat([df_x_feature, df_y_feature, df_z_feature],axis=1)
+        
 def add_feature(features,df_x,df_y,df_z,df_x_DC,df_y_DC,df_z_DC,feature_path,sensor,start,length):
     existing_features = []
 

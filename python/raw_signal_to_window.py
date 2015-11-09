@@ -25,7 +25,7 @@ def create_sliding_window(path, filename, seperator, size, overlap, signal_folde
     pd.set_option('html',False)
 
     f = path + signal_folder + filename
-    
+    print f
     df = pd.read_csv(f, header=None, sep=seperator)
 
     num_of_axis = len(df.iloc[0].values)
@@ -51,7 +51,7 @@ def create_sliding_window(path, filename, seperator, size, overlap, signal_folde
             folder_name = "ORIGINAL"
 
         # Check if folder exist, create
-        new_folder = path + '/DATA_WINDOW/' + str(size / 100) + '/' + folder_name
+        new_folder = path + '/DATA_WINDOW/' + str(size*1.0 / 100) + '/' + folder_name
 
         if not os.path.exists(new_folder):
             os.makedirs(new_folder)
@@ -71,7 +71,6 @@ def raw_signal_to_window_main(direct, size, overlap, dc_component):
 
     # Files in current directory
     files_in_dir = [ f for f in listdir(p + signal_folder) if isfile(join(p+ signal_folder,f)) ]
-    print p
 
     for f in files_in_dir:
         create_sliding_window(p, f, '\,', size, overlap, signal_folder, dc_component)

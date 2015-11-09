@@ -12,12 +12,12 @@ def extract_rms_feature(data_frame, start, length, feature_type, sensor, axis):
     data_frame.columns = [feature_type + '_' + sensor + '_' + axis]
     return data_frame
 
-'''____________________Zero-crossing-rate_______________'''
-def zero_crossing(l):
-    return len(np.where(np.diff(np.sign(l.values)))[0])*1.0 / len(l.values)
+'''____________________Mean-crossing-rate_______________'''
+def mean_crossing(l):
+    return len(np.where(np.diff(np.sign(l.values - np.mean(l))))[0])*1.0 / len(l.values)
 
-def extract_zero_crossing_rate_feature(data_frame, start, length, feature_type, sensor, axis):
-    data_frame = data_frame.apply(zero_crossing, axis=1)[start: start + length].to_frame()
+def extract_mean_crossing_rate_feature(data_frame, start, length, feature_type, sensor, axis):
+    data_frame = data_frame.apply(mean_crossing, axis=1)[start: start + length].to_frame()
     data_frame.columns = [feature_type + '_' + sensor + '_' + axis]
     return data_frame
 
@@ -103,10 +103,10 @@ def extract_simple_fft_feature(data_frame, start, length, feature_type, sensor, 
 
 def fft_spectral_centroid(l):
     fft = np.fft.fft(l)
-    fft = fft[0:50]
+    fft = fft[0:len(l)/2]
     sum_frequency_times_amplitude = 0
     sum_amplitude = 0
-    for x in range(0, 50):
+    for x in range(0, len(l)/2):
         sum_frequency_times_amplitude += x * abs(fft[x])
         sum_amplitude += abs(fft[x])
     return sum_frequency_times_amplitude/sum_amplitude
@@ -121,16 +121,16 @@ def extract_fft_spectral_centroid(data_frame,start,length,feature_type,sensor,ax
 
 def fft_spectral_entropy(l):
     fft = np.fft.fft(l)
-    fft = fft[0:50]
+    fft = fft[0:len(l)/2]
     psum=0
     H=0
 
-    for i in range(0,50):
-        a = (1.0/50)*abs(fft[i])*abs(fft[i])
+    for i in range(0,len(l)/2):
+        a = (1.0/len(l)/2)*abs(fft[i])*abs(fft[i])
         psum = psum + a
 
-    for i in range(0, 50):
-        a = (1.0/50)*abs(fft[i])*abs(fft[i])
+    for i in range(0, len(l)/2):
+        a = (1.0/len(l)/2)*abs(fft[i])*abs(fft[i])
         Pi = a/psum
         H = H + Pi*np.log2(Pi) 
     H=-H
@@ -155,9 +155,22 @@ def extract_DC_angle(df_x, df_y, df_z, start, length, feature_type, sensor):
     df_g = df_x_mean.pow(2,axis=0) + df_y_mean.pow(2,axis=0) + df_z_mean.pow(2,axis=0)
     df_g = df_g.apply(np.sqrt)
 
-    df_div = df_z_mean.div(df_g,axis=0)
+    df_div =  df_z_mean.div(df_g,axis=0)
     df_angle = df_div.apply(np.arccos) * 180 / math.pi
 
     data_frame_result = df_angle[start:start+length].to_frame()
     data_frame_result.columns = [feature_type + '_' + sensor]
     return data_frame_result  
+
+def fft_max_magnitude(l):
+    fft = np.fft.fft(l)
+    fft = abs(fft[5:len(l)/2])
+    return np.argmax(fft)
+
+
+
+def extract_fft_max_magnitude(data_frame,start,length,feature_type,sensor,axis):
+    data_frame_result = data_frame.apply(fft_max_magnitude,axis=1)[start:start + length].to_frame()
+
+    data_frame_result.columns = [feature_type + '_' + sensor + '_' + axis]
+    return data_frame_result    
