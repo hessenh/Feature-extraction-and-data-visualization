@@ -3,7 +3,7 @@ from os import path
 import os
 from os import listdir
 
-def weka_main(direct, generalized,window_size):
+def weka_main(direct, generalized,window_size, without_activity):
 
 
 
@@ -33,6 +33,8 @@ def weka_main(direct, generalized,window_size):
 
 	df_features = pd.concat([df_features,df_labels],axis=1)
 
+	if without_activity:
+		df_features = df_features[df_labels['label'] != 9]
 
 	if generalized:
 		t = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/WEKA/' + str(window_size) +'/'+ direct + 'GENERALIZED.arff')
