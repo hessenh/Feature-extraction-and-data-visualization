@@ -135,6 +135,6 @@ def extract_features_main(direct,features,window_size) :
 
 
     # Add features
-    add_feature(features, df_thigh_x, df_thigh_y, df_thigh_z, df_thigh_x_DC, df_thigh_y_DC, df_thigh_x_DC, feature_path, 'thigh', start, length)
+    add_feature(features, df_thigh_x, df_thigh_y, df_thigh_z, df_thigh_x_DC, df_thigh_y_DC, df_thigh_z_DC, feature_path, 'thigh', start, length)
     add_feature(features, df_chest_x, df_chest_y, df_chest_z, df_chest_x_DC, df_chest_y_DC, df_chest_x_DC, feature_path, 'chest', start ,length) 
 
