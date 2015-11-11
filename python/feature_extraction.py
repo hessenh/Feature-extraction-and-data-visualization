@@ -144,3 +144,10 @@ def extract_features_main(direct,features,window_size) :
     add_feature(features, df_thigh_x, df_thigh_y, df_thigh_z, df_thigh_x_DC, df_thigh_y_DC, df_thigh_z_DC, feature_path, 'thigh', start, length)
     add_feature(features, df_chest_x, df_chest_y, df_chest_z, df_chest_x_DC, df_chest_y_DC, df_chest_z_DC, feature_path, 'chest', start ,length) 
 
+
+
+def remove_feature_files(direct, window_size):
+    dirname=os.path.dirname
+    p = os.path.join(dirname(dirname(__file__)), 'data/'+direct)
+    feature_path = path.relpath(p + '/FEATURES/'+str(window_size)+'/FEATURES.csv')
+    os.remove(feature_path);
