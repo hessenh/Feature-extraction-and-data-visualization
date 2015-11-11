@@ -10,7 +10,7 @@ Creating sliding window, extract features and creates the weka-files.
 input: Subjects, window size, overlap and boolean values depening one what you want to do, e.g create windows
 
 '''
-def main(subjects, size_of_window, overlap_between_windows, remove_activities, create_sliding_windows, create_features, current_window_size, create_weka, create_weka_generalized, create_weka_without_activity):
+def main(subjects, size_of_window, overlap_between_windows, remove_activities, create_sliding_windows,remove_features, create_features, current_window_size, create_weka, create_weka_generalized, create_weka_without_activity):
 	for subject_directory in subjects:
 		print "Subject: " + subject_directory
 
@@ -27,6 +27,11 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 			print "Creating windows"
 			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, False)
 			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, True)
+
+
+		# Remove feature file
+		if remove_features: 
+			remove_feature_files(subject_directory, current_window_size)
 
 		# Extract features 
 		if create_features:
@@ -55,13 +60,14 @@ overlap_between_windows = size_of_window/2
 main(subjects, 
 	size_of_window, 
 	overlap_between_windows,
-	True, # Remove activities from signals
-	True, # Create sliding windows
+	False, # Remove activities from signals
+	False, # Create sliding windows,
+	True, # Remove_features before creating new?
 	True, # Create features? Remember to delete prev file if you are not appending a feature. 
 	1.0, # What window-size are the feature generated from?
 	True, # Create Weka?
 	True, # Create generalized weka?
-	True) # Create weka without transition?
+	False) # Create weka without transition?
 
 
 ''' Activities: 
