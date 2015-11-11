@@ -229,40 +229,75 @@ DS{length(DS)+1} = Activities;
 %WRITE DS to CSV File and make directories for subject
 
 
-
+% 
     nameArray = strsplit(Files(1).name,'_');
     subjectName = char(nameArray(1));
     path = strcat('../data/',subjectName,'/RAW_SIGNALS/');
     mkdir(path);
-   
-  
+%    
+%   
+% 
+%     
+%   for i = 1:3   
+%      filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
+%      %csvwrite(strcat(path,filename), DS{i});
+%   end
+%     
+% 
+%  
+%     dirPath = strcat('../data/',subjectName,'/');
+%     mkdir(dirPath,'DATA_WINDOW');
+%     mkdir(dirPath,'WEKA');
+%     mkdir(dirPath,'FEATURES');
+%     mkdir(dirPath,'RAW_SIGNALS_DC');
+%     
+%     path = strcat('../data/',subjectName,'/RAW_SIGNALS_DC/');
+% %[b,a] = ellip(3,0.01,100,0.05);
+% %freqz(b,a);
+% 
+% filterSize = 99;
+% alpha = 7;
+% 
+% 
+% filtere = fspecial('gaussian',[filterSize 1], alpha); % gaussian kernel where s= size of contour
+% 
+% 
+% 
+% 
+% for i =1:3
+%    % Sensor signals
+%    if(i<3) 
+%         vector = DS{i};
+%         for j=1:3
+%             smooth = conv(vector(:,j), filtere); % convolution
+%             smooth=smooth((filterSize+1)/2:end-(filterSize-1)/2);
+%             vector(:,j) = smooth;
+%         end
+%         filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_DC.csv');
+%         csvwrite(strcat(path,filename), vector);
+%    % Lables
+%    else 
+%         filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv');
+%         csvwrite(strcat(path,filename), DS{i});
+%    end
+%    
+% end
 
-    
-  for i = 1:3   
-     filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
-     %csvwrite(strcat(path,filename), DS{i});
-  end
-    
 
- 
+
     dirPath = strcat('../data/',subjectName,'/');
     mkdir(dirPath,'DATA_WINDOW');
     mkdir(dirPath,'WEKA');
     mkdir(dirPath,'FEATURES');
-    mkdir(dirPath,'RAW_SIGNALS_DC');
+    mkdir(dirPath,'RAW_SIGNALS_SMOOTHED');
     
-    path = strcat('../data/',subjectName,'/RAW_SIGNALS_DC/');
-%[b,a] = ellip(3,0.01,100,0.05);
-%freqz(b,a);
+    path = strcat('../data/',subjectName,'/RAW_SIGNALS_SMOOTHED/');
 
-filterSize = 99;
-alpha = 7;
 
+filterSize = 9;
+alpha = 5;
 
 filtere = fspecial('gaussian',[filterSize 1], alpha); % gaussian kernel where s= size of contour
-
-
-
 
 for i =1:3
    % Sensor signals
@@ -273,7 +308,7 @@ for i =1:3
             smooth=smooth((filterSize+1)/2:end-(filterSize-1)/2);
             vector(:,j) = smooth;
         end
-        filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_DC.csv');
+        filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_smoothed.csv');
         csvwrite(strcat(path,filename), vector);
    % Lables
    else 
@@ -282,15 +317,6 @@ for i =1:3
    end
    
 end
-
-
-
-
-
-
-
-
-
 
 
 
