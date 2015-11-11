@@ -60,8 +60,8 @@ overlap_between_windows = size_of_window/2
 main(subjects, 
 	size_of_window, 
 	overlap_between_windows,
-	False, # Remove activities from signals
-	False, # Create sliding windows,
+	True, # Remove activities from signals
+	True, # Create sliding windows,
 	True, # Remove_features before creating new?
 	True, # Create features? Remember to delete prev file if you are not appending a feature. 
 	1.0, # What window-size are the feature generated from?
