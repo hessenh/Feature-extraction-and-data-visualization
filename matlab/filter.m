@@ -27,8 +27,8 @@ vector = [-0.31641,-0.30859,-0.30469,-0.30078,-0.28906,-0.28125,-0.28125,-0.2851
 % dataIn = randn(1000,1);
 % dataOut = filter(b,a,vector);
 % plot(dataOut, 'b-', 'linewidth', 3);
-filterSize = 100
-alpha = 7
+filterSize = 10
+alpha = 5
 
 
 filtere = fspecial('gaussian',[filterSize 1], alpha); % gaussian kernel where s= size of contour
