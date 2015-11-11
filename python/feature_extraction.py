@@ -147,7 +147,13 @@ def extract_features_main(direct,features,window_size) :
 
 
 def remove_feature_files(direct, window_size):
-    dirname=os.path.dirname
-    p = os.path.join(dirname(dirname(__file__)), 'data/'+direct)
-    feature_path = path.relpath(p + '/FEATURES/'+str(window_size)+'/FEATURES.csv')
-    os.remove(feature_path);
+
+    try:
+        dirname=os.path.dirname
+        p = os.path.join(dirname(dirname(__file__)), 'data/'+direct)
+        feature_path = path.relpath(p + '/FEATURES/'+str(window_size)+'/FEATURES.csv')
+        os.remove(feature_path);
+
+    except OSError:
+        print "Feature file did not exist"
+   
