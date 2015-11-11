@@ -5,10 +5,17 @@ from os import path
 import os
 from os import listdir
 from os.path import isfile, join
+from collections import Counter
 
 '''
 Using the Sliding file to create a the windows
 '''
+def find_most_common_label(l):
+
+    word_counts = Counter(l.values)
+    most_common_label = word_counts.most_common(1)
+    return most_common_label[0][0]
+  
 def extract_axis(df, size, overlap):
     df = df.values.tolist();
     df = np.array(df)
@@ -41,7 +48,12 @@ def create_sliding_window(path, filename, seperator, size, overlap, signal_folde
         else: 
             df_windows = extract_axis(df[i], size, overlap)
             # label the window with the maximum number of labels in that window
-            df_windows = df_windows.max(axis=1)
+            
+            df_windows = df_windows.apply(find_most_common_label,axis=1)
+
+
+            
+
             file_name_axis = filename[4:len(filename)-4] + "_L.csv"
         
         
