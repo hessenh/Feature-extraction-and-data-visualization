@@ -31,7 +31,7 @@ switch reply
             directoryname = uigetdir(Dir_Data_Exported, 'Pick a Directory');
         
             cd(directoryname);
-            Files = dir('P*.mat');
+            Files = dir('1*.mat');
             SensorsN = length(Files);
             
             clear S;
@@ -66,7 +66,7 @@ for j=1:length(S) % 7:7 %
         
         if( strcmp( S(j).SensorExtracted.SensorType , 'Shimmer3' ) )
             Accel = S(j).SensorExtracted.DataSignalsOnly.Sensor1(:,7:9);    % For the Shimmer sensors
-        elseif( strcmp( S(j).SensorExtracted.SensorType , 'Usability' ) )
+        elseif( strcmp( S(j).SensorExtracted.SensorType , 'Video' ) )
             TempA = S(j).SensorExtracted.DataSignalsOnly;
             TempAccel = TempA; % + 1;
             %Accel = TempAccel
@@ -122,7 +122,7 @@ SyncStartSample = S(j).SensorExtracted.Handshakes.OffsetSamples;
  
  
  
- if( strcmp(S(j).SensorExtracted.SensorName , 'Usability' ) )
+ if( strcmp(S(j).SensorExtracted.SensorName , 'GoPro' ) )
      Activities = S(j).SensorExtracted.AllData.FramesResampled.Activity( SyncStartSample : end , :  );
 %      ActivitiesTimeAll = S(j).SensorExtracted.AllData.FramesResampled.Time( SyncStartSample : end , :  );
 %      ActivitiesTime = ActivitiesTimeAll - ActivitiesTimeAll(1);
@@ -238,11 +238,11 @@ DS{length(DS)+1} = Activities;
 %   
 % 
 %     
-%   for i = 1:3   
-%      filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
-%      %csvwrite(strcat(path,filename), DS{i});
-%   end
-%     
+  for i = 1:3   
+     filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
+     csvwrite(strcat(path,filename), DS{i});
+  end
+    
 % 
 %  
 %     dirPath = strcat('../data/',subjectName,'/');
@@ -291,32 +291,32 @@ DS{length(DS)+1} = Activities;
     mkdir(dirPath,'FEATURES');
     mkdir(dirPath,'RAW_SIGNALS_SMOOTHED');
     
-    path = strcat('../data/',subjectName,'/RAW_SIGNALS_SMOOTHED/');
-
-
-filterSize = 9;
-alpha = 5;
-
-filtere = fspecial('gaussian',[filterSize 1], alpha); % gaussian kernel where s= size of contour
-
-for i =1:3
-   % Sensor signals
-   if(i<3) 
-        vector = DS{i};
-        for j=1:3
-            smooth = conv(vector(:,j), filtere); % convolution
-            smooth=smooth((filterSize+1)/2:end-(filterSize-1)/2);
-            vector(:,j) = smooth;
-        end
-        filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_smoothed.csv');
-        csvwrite(strcat(path,filename), vector);
-   % Lables
-   else 
-        filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv');
-        csvwrite(strcat(path,filename), DS{i});
-   end
-   
-end
+%     path = strcat('../data/',subjectName,'/RAW_SIGNALS_SMOOTHED/');
+% 
+% 
+% filterSize = 9;
+% alpha = 5;
+% 
+% filtere = fspecial('gaussian',[filterSize 1], alpha); % gaussian kernel where s= size of contour
+% 
+% for i =1:3
+%    % Sensor signals
+%    if(i<3) 
+%         vector = DS{i};
+%         for j=1:3
+%             smooth = conv(vector(:,j), filtere); % convolution
+%             smooth=smooth((filterSize+1)/2:end-(filterSize-1)/2);
+%             vector(:,j) = smooth;
+%         end
+%         filename = strcat(Files(i).name(1:length(Files(i).name)-4),'_smoothed.csv');
+%         csvwrite(strcat(path,filename), vector);
+%    % Lables
+%    else 
+%         filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv');
+%         csvwrite(strcat(path,filename), DS{i});
+%    end
+%    
+% end
 
 
 
