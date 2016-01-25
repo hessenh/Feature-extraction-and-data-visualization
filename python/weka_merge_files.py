@@ -3,10 +3,10 @@ from os import path
 import os
 from os import listdir
 
-SUBJECTS = ["P03","P04","P05","P06","P07","P08","P09","P10","P11","P14","P15","P16","P17","P18","P19","P20","P21"]
+SUBJECTS = ["P03","P04","P06","P07","P08","P09","P10","P11","P14","P15","P16","P17","P18","P19","P20","P21"]#["P03","P06","P08","P10","P14","P16","P18","P20"]#
 
 START_SUB = SUBJECTS[0]
-WINDOW_SIZE = "1.0"
+WINDOW_SIZE = "1.5"
 RESULT_PATH = '../data/'+str(WINDOW_SIZE)+ '.arff'
 
 
