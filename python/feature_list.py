@@ -134,12 +134,10 @@ def fft_spectral_entropy(l):
         Pi = a/psum
         H = H + Pi*np.log2(Pi) 
     H=-H
-    
     return H
 
 def extract_fft_spectral_entropy(data_frame,start,length,feature_type,sensor,axis):
     data_frame_result = data_frame.apply(fft_spectral_entropy,axis=1)[start:start + length].to_frame()
-    
     data_frame_result.columns = [feature_type + '_' + sensor + '_' + axis]
     return data_frame_result    
 
