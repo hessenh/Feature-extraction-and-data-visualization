@@ -17,7 +17,7 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 		# Remove activities such as undefined/static/dynamic
 		if remove_activities:
 			print "Removing activities"
-			activities = [-1,11,13,14,15] 
+			activities = [0,12,15] 
 			remove_activities_main(subject_directory, activities, False)
 			remove_activities_main(subject_directory, activities, True)
 
@@ -52,7 +52,8 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 			weka_main(subject_directory,True,current_window_size, create_weka_without_activity)
 
 
-subjects = ["P01","P03","P04","P05","P06","P07","P08","P09","P10","P11","P14","P15","P16","P17","P18","P19","P20","P21"]
+#subjects = ["P03","P04","P06","P07","P08","P09","P10","P11","P14","P15","P16","P17","P18","P19","P20","P21"]
+subjects = ["01A","02A","03A","04A","05A","07A","08A","09A","10A","11A","12A","13A","14A","15A","16A","18A","19A","21A","22A","23A"]
 size_of_window = 100
 overlap_between_windows = size_of_window/2
 
@@ -65,12 +66,34 @@ main(subjects,
 	True, # Remove_features before creating new?
 	True, # Create features? Remember to delete prev file if you are not appending a feature. 
 	1.0, # What window-size are the feature generated from?
-	True, # Create Weka?
-	True, # Create generalized weka?
-	False) # Create weka without transition?
+	True , # Create Weka?
+	False, # Create generalized weka?
+	False) # Create weka without activities?
 
 
-''' Activities: 
+''' Activities Adults people: 
+0:'none'	
+1:'walking'	
+2:'Running'	
+3:'shuffling'	
+4:'stairs (ascending)'	
+5:'stairs (descending)'	
+6:'standing'	
+7:'sitting'	
+8:'lying'	
+9:'transition'	
+10:'Bending'	
+11:'Picking'	
+12:'Undefined'	
+13:'Cycling (sitting)'	
+14:'Cycling (stand)'	
+15:'Heel-drop'	
+16:'Vigorous Activities'	
+17:'Non-Vigorous Activities'
+
+'''
+
+''' Activities older people: 
 :'none'	
 1:'walking'	
 2:'walking with transition'	
