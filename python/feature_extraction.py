@@ -132,7 +132,7 @@ def extract_features_main(direct,features,window_size) :
 
     # Size of smallest sensor data
     start = 0
-    length = min(len(df_chest_x), len(df_thigh_x))-1 
+    length = min(len(df_chest_x), len(df_thigh_x)) 
 
     #Create feature folder for window size if it doesnt exist
     new_folder = p + '/FEATURES/' + str(window_size) 
