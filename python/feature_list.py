@@ -109,11 +109,14 @@ def fft_spectral_centroid(l):
     for x in range(0, len(l)/2):
         sum_frequency_times_amplitude += x * abs(fft[x])
         sum_amplitude += abs(fft[x])
-    return sum_frequency_times_amplitude/sum_amplitude
+    if sum_amplitude == 0:
+        return 25.0
+    else:
+        return sum_frequency_times_amplitude/sum_amplitude
 
 def extract_fft_spectral_centroid(data_frame,start,length,feature_type,sensor,axis):
     data_frame_result = data_frame.apply(fft_spectral_centroid,axis=1)[start:start + length].to_frame()
-    
+
     data_frame_result.columns = [feature_type + '_' + sensor + '_' + axis]
     return data_frame_result
 
