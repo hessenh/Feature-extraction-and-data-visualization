@@ -132,7 +132,8 @@ def fft_spectral_entropy(l):
     for i in range(0, len(l)/2):
         a = (1.0/len(l)/2)*abs(fft[i])*abs(fft[i])
         Pi = a/psum
-        H = H + Pi*np.log2(Pi) 
+        if Pi!=0:
+            H = H + Pi*np.log2(Pi) 
     H=-H
     return H
 
