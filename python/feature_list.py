@@ -24,6 +24,7 @@ def extract_mean_crossing_rate_feature(data_frame, start, length, feature_type, 
 '''____________________Correlation_______________'''
 def extract_correlation_feature(data_frame_one, data_frame_two, start, length, feature_type, sensor, axis):
     data_frame = data_frame_one.corrwith(data_frame_two, axis=1)[start: start + length].to_frame()
+    data_frame = data_frame.fillna(1.0)
     data_frame.columns = [feature_type + '_' + sensor + '_' + axis]
     return data_frame
 
