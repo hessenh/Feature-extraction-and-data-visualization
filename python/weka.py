@@ -78,8 +78,8 @@ def weka_main(direct, generalized,window_size, without_activity):
 
 	for i in range(len(df_features)-1):
 		new_l = ""
-		for i in df_features.iloc[i].values:
-			new_l += str(i)
+		for j in df_features.iloc[i].values:
+			new_l += str(j)
 			new_l += ","
 		new_l = new_l[:-1]
 		finalList.append([new_l])

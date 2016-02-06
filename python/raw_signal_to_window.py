@@ -25,7 +25,7 @@ def extract_axis(df, size, overlap):
     return df_windows
     
     
-def create_sliding_window(path, filename, seperator, size, overlap, signal_folder, dc_component):
+def create_sliding_window(path, filename, seperator, size, overlap, signal_folder, dc_component, len_of_start_name):
     
     axis = ["X", "Y", "Z"]
     
@@ -42,7 +42,7 @@ def create_sliding_window(path, filename, seperator, size, overlap, signal_folde
         # Acc - xyz
         if num_of_axis > 1:
             df_windows = extract_axis(df[i], size, overlap)
-            file_name_axis = filename[4:len(filename)-4] + "_"+ axis[i] + ".csv"
+            file_name_axis = filename[len_of_start_name:len(filename)-4] + "_"+ axis[i] + ".csv"
             
         # Label
         else: 
@@ -54,7 +54,7 @@ def create_sliding_window(path, filename, seperator, size, overlap, signal_folde
 
             
 
-            file_name_axis = filename[4:len(filename)-4] + "_L.csv"
+            file_name_axis = filename[len_of_start_name:len(filename)-4] + "_L.csv"
         
         
         if dc_component:
@@ -72,7 +72,7 @@ def create_sliding_window(path, filename, seperator, size, overlap, signal_folde
 
 
 
-def raw_signal_to_window_main(direct, size, overlap, dc_component):
+def raw_signal_to_window_main(direct, size, overlap, dc_component, len_of_start_name):
     if dc_component:
         signal_folder = "/RAW_SIGNALS_DC/"
     else:
@@ -85,4 +85,4 @@ def raw_signal_to_window_main(direct, size, overlap, dc_component):
     files_in_dir = [ f for f in listdir(p + signal_folder) if isfile(join(p+ signal_folder,f)) ]
 
     for f in files_in_dir:
-        create_sliding_window(p, f, '\,', size, overlap, signal_folder, dc_component)
+        create_sliding_window(p, f, '\,', size, overlap, signal_folder, dc_component, len_of_start_name)
