@@ -31,7 +31,7 @@ switch reply
             directoryname = uigetdir(Dir_Data_Exported, 'Pick a Directory');
         
             cd(directoryname);
-            Files = dir('2*.mat');
+            Files = dir('P*.mat');
             SensorsN = length(Files);
             
             clear S;
@@ -46,7 +46,6 @@ switch reply
             cd(Main_Dir);
         end
         
-        figure;
         
 end
 
@@ -232,16 +231,16 @@ DS{length(DS)+1} = Activities;
 % 
     nameArray = strsplit(Files(1).name,'_');
      subjectName = char(nameArray(1));
-%     path = strcat('../data/',subjectName,'/RAW_SIGNALS/');
-%     mkdir(path);
+     path = strcat('../data/',subjectName,'/RAW_SIGNALS/');
+     mkdir(path);
 % %    
 % %   
 % % 
 % %     
-%   for i = 1:3   
-%      filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
-%      csvwrite(strcat(path,filename), DS{i});
-%   end
+   for i = 1:3   
+      filename = strcat(Files(i).name(1:length(Files(i).name)-4),'.csv')
+      csvwrite(strcat(path,filename), DS{i});
+   end
     
 % 
 %  

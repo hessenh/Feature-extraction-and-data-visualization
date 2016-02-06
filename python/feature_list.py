@@ -159,12 +159,13 @@ def extract_DC_angle(df_x, df_y, df_z, start, length, feature_type, sensor):
 
     df_g = df_x_mean.pow(2,axis=0) + df_y_mean.pow(2,axis=0) + df_z_mean.pow(2,axis=0)
     df_g = df_g.apply(np.sqrt)
-
+        
     df_div =  - df_x_mean.div(df_g,axis=0)
     df_angle = df_div.apply(np.arccos) * 180 / math.pi
 
     data_frame_result = df_angle[start:start+length].to_frame()
     data_frame_result.columns = [feature_type + '_' + sensor]
+    
     return data_frame_result  
 
 def fft_max_magnitude(l):

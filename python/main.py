@@ -25,8 +25,8 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 		# Create sliding windows 
 		if create_sliding_windows:
 			print "Creating windows"
-			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, False)
-			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, True)
+			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, False, 5)
+			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, True, 5)
 
 
 		# Remove feature file
@@ -38,6 +38,7 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 			print "Extracting features"# 
 
 			features = ['mean', 'min', 'max', 'median','std', 'energy','correlation','mean-crossing', 'rms','fft-mean', 'fft-median', 'fft-max', 'fft-std','fft-spectral-centroid','fft-spectral-entropy','DC-angle','fft-max-magnitude']
+			#features = ['DC-angle']
 		
 			extract_features_main(subject_directory,features, current_window_size)
 
@@ -54,7 +55,8 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 
 
 #subjects = ["P03","P04","P06","P07","P08","P09","P10","P11","P14","P15","P16","P17","P18","P19","P20","P21"]
-subjects = ["01A","02A","03A","04A","05A","07A","08A","09A","10A","11A","12A","13A","14A","15A","16A","18A","19A","21A","22A","23A"]
+#subjects = ["01A","02A","03A","04A","05A","07A","08A","09A","10A","11A","12A","13A","14A","15A","16A","18A","19A","21A","22A","23A"] # 14A
+subjects = ["PM01","PM02","PM03","PM04","PM05","PM06","PM07","PM08","PM09","PM11","PM12","PM13","PM14","PM15","PM16"]
 size_of_window = 100
 overlap_between_windows = size_of_window/2
 
@@ -62,8 +64,8 @@ overlap_between_windows = size_of_window/2
 main(subjects, 
 	size_of_window, 
 	overlap_between_windows,
-	False, # Remove activities from signals
-	False, # Create sliding windows,
+	True, # Remove activities from signals
+	True, # Create sliding windows,
 	True, # Remove_features before creating new?
 	True, # Create features? Remember to delete prev file if you are not appending a feature. 
 	1.0, # What window-size are the feature generated from?
