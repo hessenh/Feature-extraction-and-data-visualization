@@ -10,7 +10,8 @@ Creating sliding window, extract features and creates the weka-files.
 input: Subjects, window size, overlap and boolean values depening one what you want to do, e.g create windows
 
 '''
-def main(subjects, size_of_window, overlap_between_windows, remove_activities, create_sliding_windows,remove_features, create_features, current_window_size, create_weka, create_weka_generalized, create_weka_without_activity):
+def main(subjects,split, size_of_window, overlap_between_windows, remove_activities, create_sliding_windows,remove_features, create_features, current_window_size, create_weka, create_weka_generalized, create_weka_without_activity):
+	i=0;
 	for subject_directory in subjects:
 		print "Subject: " + subject_directory
 
@@ -25,8 +26,8 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 		# Create sliding windows 
 		if create_sliding_windows:
 			print "Creating windows"
-			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, False, 5)
-			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, True, 5)
+			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, False, 4)
+			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, True, 4)
 
 
 		# Remove feature file
@@ -45,7 +46,8 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 		# Create weka file
 		if create_weka:
 			print "Converting to weka-format"
-			weka_main(subject_directory,False,current_window_size, create_weka_without_activity)
+			weka_main(subject_directory,False,current_window_size, create_weka_without_activity,split[i],True)
+			
 
 		# Create generalized weka file
 		if create_weka_generalized:
@@ -53,18 +55,22 @@ def main(subjects, size_of_window, overlap_between_windows, remove_activities, c
 			label_generalization_main(change_list, subject_directory, current_window_size)
 			weka_main(subject_directory,True,current_window_size, create_weka_without_activity)
 
+		i+=i
+
 
 #subjects = ["P03","P04","P06","P07","P08","P09","P10","P11","P14","P15","P16","P17","P18","P19","P20","P21"]
-#subjects = ["01A","02A","03A","04A","05A","07A","08A","09A","10A","11A","12A","13A","14A","15A","16A","18A","19A","21A","22A","23A"] # 14A
-subjects = ["PM01","PM02","PM03","PM04","PM05","PM06","PM07","PM08","PM09","PM11","PM12","PM13","PM14","PM15","PM16"]
+subjects = ["02A"]#,"02A","03A","04A","05A","07A","08A","09A","10A","11A","12A","13A","14A","15A","16A","18A","19A","21A","22A","23A"] # 14A
+#subjects = ["PM01"] #,"PM02","PM03","PM04","PM05","PM06","PM07","PM08","PM09","PM11","PM12","PM13","PM14","PM15","PM16"]
+split = [int(202296/50)]
 size_of_window = 100
 overlap_between_windows = size_of_window/2
 
 # subjects, size_of_window, overlap_between_windows, remove_activities, dc_comp, create_sliding_windows, create_features, create_weka, create_weka_generalized, 
 main(subjects, 
+	split,
 	size_of_window, 
 	overlap_between_windows,
-	True, # Remove activities from signals
+	False, # Remove activities from signals
 	True, # Create sliding windows,
 	True, # Remove_features before creating new?
 	True, # Create features? Remember to delete prev file if you are not appending a feature. 
