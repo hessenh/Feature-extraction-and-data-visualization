@@ -3,7 +3,7 @@ from os import path
 import os
 from os import listdir
 
-def weka_main(direct, generalized,window_size, without_activity):
+def weka_main(direct, generalized,window_size, without_activity,split,part):
 
 
 
@@ -26,10 +26,17 @@ def weka_main(direct, generalized,window_size, without_activity):
 		LABELS = os.path.join(dirname(dirname(__file__)), 'data/'+direct + '/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/GoPro_LAB_All_L.csv')
 
 	print LABELS
+
 	df_labels = pd.read_csv(LABELS)
 	df_labels.columns = ['label']
 
-	df_features = df_features[:len(df_labels)]
+	if (part):
+		df_labels = df_labels[0:split]
+		df_features = df_features[0:split]
+	else:
+		df_features = df_features[split+1:len(df_labels)-1]
+		df_labels = df_labels[split+1:len(df_labels)-1]
+		
 
 
 	df_features = pd.concat([df_features,df_labels],axis=1)
@@ -75,14 +82,16 @@ def weka_main(direct, generalized,window_size, without_activity):
 
 	finalList.append(['@data'])
 
+	remove_activities = [0.0,12.0,15.0]
 
 	for i in range(len(df_features)-1):
-		new_l = ""
-		for j in df_features.iloc[i].values:
-			new_l += str(j)
-			new_l += ","
-		new_l = new_l[:-1]
-		finalList.append([new_l])
+		if df_features.iloc[i].values[-1] not in remove_activities:
+			new_l = ""
+			for j in df_features.iloc[i].values:
+				new_l += str(j)
+				new_l += ","
+			new_l = new_l[:-1]
+			finalList.append([new_l])
 
 
 	with open(t, 'w') as file:
