@@ -27,7 +27,7 @@ def remove_activities_main(subject_directory, activities, dc_comp):
 	#one = files_in_dir[0].split('_')
 	#two = files_in_dir[1].split('_')
 	#three = files_in_dir[2].split('_')
-	df_chest = pd.read_csv(p + folder + dic['CHEST'], header=None, sep='\,')
+	df_chest = pd.read_csv(p + folder + dic['BACK'], header=None, sep='\,')
 	df_thigh = pd.read_csv(p + folder + dic['THIGH'], header=None, sep='\,')
 	df_label = pd.read_csv(p + folder + dic['LAB'], header=None, sep='\,')
 
@@ -44,7 +44,7 @@ def remove_activities_main(subject_directory, activities, dc_comp):
 		df_label = df_label[df_label[0] != activity]
 
 
-	df_chest.to_csv(p + folder+dic['CHEST'],  header=None, index=False)
+	df_chest.to_csv(p + folder+dic['BACK'],  header=None, index=False)
 	df_thigh.to_csv(p + folder+dic['THIGH'],  header=None, index=False)
 	df_label.to_csv(p + folder+dic['LAB'],  header=None, index=False)
 
