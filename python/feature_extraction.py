@@ -121,10 +121,10 @@ def extract_features_main(direct,features,window_size) :
     p = os.path.join(dirname(dirname(__file__)), 'data/'+direct)
 
     # Load data windows
-    df_chest_x,df_chest_y,df_chest_z = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Axivity_CHEST_Back_')
+    df_chest_x,df_chest_y,df_chest_z = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Axivity_BACK_Back_')
     df_thigh_x,df_thigh_y,df_thigh_z = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/ORIGINAL/Axivity_THIGH_Right_')
 
-    df_chest_x_DC,df_chest_y_DC,df_chest_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_CHEST_Back_DC_')
+    df_chest_x_DC,df_chest_y_DC,df_chest_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_BACK_Back_DC_')
     df_thigh_x_DC,df_thigh_y_DC,df_thigh_z_DC = load_sensor_data(p,'/DATA_WINDOW/'+str(window_size)+'/DC/Axivity_THIGH_Right_DC_')
 
     # name of path to FEATURES
