@@ -4,7 +4,7 @@ from weka import *
 from label_generalization import *
 from remove_activities import *
 import split_activities
-
+import remove_windows
 ''' 
 Creating sliding window, extract features and creates the weka-files. 
 
@@ -34,7 +34,6 @@ def main(subjects,split, size_of_window, overlap_between_windows, remove_activit
 			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, False, 4)
 			raw_signal_to_window_main(subject_directory, size_of_window, overlap_between_windows, True, 4)
 
-
 		# Remove feature file
 		if remove_features: 
 			remove_feature_files(subject_directory, current_window_size)
@@ -47,6 +46,11 @@ def main(subjects,split, size_of_window, overlap_between_windows, remove_activit
 			#features = ['DC-angle']
 		
 			extract_features_main(subject_directory,features, current_window_size)
+
+		# Remove messy windows
+		print "Removing messy windows"
+		remove_windows.main(subject_directory, current_window_size, 0.8)
+
 
 		# Create weka file
 		if create_weka:
@@ -69,7 +73,7 @@ subjects = ["01Y","02Y","03Y","04Y","05Y","06Y","07Y","08Y","09Y","11Y","12Y","1
 subjects = ["01A","02A","03A","04A","05A","06A","07A","08A","09A","10A","11A","12A","13A","14A","15A","16A","18A","19A","20A","21A","22A","23A"]
 split = [int(180275/50),int(191316/50),int(165545/50),int(197434/50),int(189134/50),int(201924/50),int(171029/50),int(153501/50),int(165643/50),int(135574/50),int(164341/50),int(165844/50),int(181286/50),int(176569/50),int(181419/50),int(140479/50),int(130304/50),int(154552/50),int(154928/50),int(228764/50)]
 size_of_window = 100
-overlap_between_windows = None#size_of_window/2
+overlap_between_windows = 20#size_of_window/2
 
 # subjects, size_of_window, overlap_between_windows, remove_activities, dc_comp, create_sliding_windows, create_features, create_weka, create_weka_generalized, 
 main(subjects, 
@@ -81,10 +85,10 @@ main(subjects,
 	True, # Remove_features before creating new?
 	True, # Create features? Remember to delete prev file if you are not appending a feature. 
 	1.0, # What window-size are the feature generated from?
-	True , # Create Weka?
+	False , # Create Weka?
 	False, # Create generalized weka?
 	False, # Create weka without activities?
-	True) # Change labels of activities
+	False) # Change labels of activities
 
 
 ''' Activities Adults people: 
