@@ -31,7 +31,7 @@ switch reply
             directoryname = uigetdir(Dir_Data_Exported, 'Pick a Directory');
         
             cd(directoryname);
-            Files = dir('P*.mat');
+            Files = dir('2*.mat');
             SensorsN = length(Files);
             
             clear S;
