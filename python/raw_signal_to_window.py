@@ -85,4 +85,4 @@ def raw_signal_to_window_main(direct, size, overlap, dc_component, len_of_start_
     files_in_dir = [ f for f in listdir(p + signal_folder) if isfile(join(p+ signal_folder,f)) ]
 
     for f in files_in_dir:
-        create_sliding_window(p, f, '\,', size, overlap, signal_folder, dc_component, len_of_start_name)
+        create_sliding_window(p, f, '\,', size, overlap, signal_folder, dc_component, len_of_start_name,)

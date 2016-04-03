@@ -92,6 +92,8 @@ def weka_main(direct, generalized,window_size, without_activity,split,part):
 				new_l += ","
 			new_l = new_l[:-1]
 			finalList.append([new_l])
+		else:
+			print df_features.iloc[i].values[-1]
 
 
 	with open(t, 'w') as file:
