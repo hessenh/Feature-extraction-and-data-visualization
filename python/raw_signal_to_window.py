@@ -92,9 +92,9 @@ def raw_signal_to_window_main(direct, size, overlap, dc_component, len_of_start_
     print p
     # Remove folder and content - window
     if dc_component:
-        shutil.rmtree(p +'/DATA_WINDOW/' + str(size*1.0 / 100) + "/DC")
+        shutil.rmtree(p +'/DATA_WINDOW/' + str(size*1.0 / 100) + "/DC", True)
     else:
-        shutil.rmtree(p +'/DATA_WINDOW/' + str(size*1.0 / 100) + "/ORIGINAL")
+        shutil.rmtree(p +'/DATA_WINDOW/' + str(size*1.0 / 100) + "/ORIGINAL",True)
 
 
 

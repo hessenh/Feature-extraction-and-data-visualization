@@ -42,7 +42,7 @@ def main(subjects,split, size_of_window, overlap_between_windows, remove_activit
 		if create_features:
 			print "Extracting features"# 
 
-			features = ['mean', 'min', 'max', 'median','std', 'energy','correlation','mean-crossing', 'rms','fft-mean', 'fft-median', 'fft-max', 'fft-std','fft-spectral-centroid','fft-spectral-entropy','DC-angle','fft-max-magnitude']
+			features = ['mean']#True, 'min', 'max', 'median','std', 'energy','correlation','mean-crossing', 'rms','fft-mean', 'fft-median', 'fft-max', 'fft-std','fft-spectral-centroid','fft-spectral-entropy','DC-angle','fft-max-magnitude']
 			#features = ['DC-angle']
 		
 			extract_features_main(subject_directory,features, current_window_size)
@@ -68,9 +68,9 @@ def main(subjects,split, size_of_window, overlap_between_windows, remove_activit
 
 
 subjects = ["P01","P03","P04","P05","P06","P07","P08","P09","P10","P11","P12","P13","P14","P15","P16","P17","P18","P19","P20","P21"]
-subjects = ["PM01","PM02","PM03","PM04","PM05","PM06","PM07","PM08","PM09","PM11","PM12","PM13","PM14","PM15","PM16"]
+subjects = ["01A"]#,"02A","03A","04A","05A","06A","07A","08A","09A","10A","11A","12A","13A","14A","15A","16A","18A","19A","20A","21A","22A","23A"]
 subjects = ["01Y","02Y","03Y","04Y","05Y","06Y","07Y","08Y","09Y","11Y","12Y","13Y"]
-subjects = ["01A","02A","03A","04A","05A","06A","07A","08A","09A","10A","11A","12A","13A","14A","15A","16A","18A","19A","20A","21A","22A","23A"]
+#subjects = ["PM01","PM02","PM03","PM04","PM05","PM06","PM07","PM08","PM09","PM11","PM12","PM13","PM14","PM15","PM16"]
 split = [int(180275/50),int(191316/50),int(165545/50),int(197434/50),int(189134/50),int(201924/50),int(171029/50),int(153501/50),int(165643/50),int(135574/50),int(164341/50),int(165844/50),int(181286/50),int(176569/50),int(181419/50),int(140479/50),int(130304/50),int(154552/50),int(154928/50),int(228764/50)]
 size_of_window = 100
 overlap_between_windows = 20#size_of_window/2
