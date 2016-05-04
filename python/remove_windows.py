@@ -10,7 +10,7 @@ from collections import Counter
 def main(direct, size, threshold):
    # Get the label and feature paths
    paths = get_file_paths(direct, size)
-
+   signal_path_files = get_sensor_file_paths(direct, size)
 
    # Load label and feature data frame
    df_label = load_file_to_dataframe(paths[0], None)
@@ -23,6 +23,13 @@ def main(direct, size, threshold):
    # Remove windows bellow threshold
    df_removed_windows_label = remove_windows(df_label, df_label_boolean)
    df_removed_windows_features = remove_windows(df_features, df_label_boolean)
+
+   # Remove for signals also
+   for file in signal_path_files:
+    df = load_file_to_dataframe(file, None)
+    df_removed_windows_signal = remove_windows(df, df_label_boolean)
+    new_path =  file[:-4] + '_REMOVED_MESSY_WINDOWS.csv'
+    save_data_frame(df_removed_windows_signal, new_path, False)
    #print len(df_removed_windows_features), len(df_removed_windows_label)
 
    # Now the labels are in this format : [1,1,1,1,1,1,1,1,1]
@@ -74,6 +81,22 @@ def load_file_to_dataframe(path, header_boolean):
     else:
         return pd.read_csv(path, header=None, sep='\,', engine="python")
 
+
+def get_sensor_file_paths(direct, size):
+  signal_path = "/DATA_WINDOW/"+str(size) + "/ORIGINAL/"
+
+  signal_folder = "/DATA_WINDOW/"
+  # Get parent dir
+  dirname=os.path.dirname
+  sub_folder = os.path.join(dirname(dirname(__file__)), 'data/' + direct)
+
+  files_in_dir = [ f for f in listdir(sub_folder+signal_path) if isfile(join(sub_folder + signal_path,f)) ]
+  signal_path_files = []
+  for file in files_in_dir:
+      if not "LAB" in file:
+          p = sub_folder + signal_path + file 
+          signal_path_files.append(p)
+  return signal_path_files
 
 def get_file_paths(direct, size):
 
